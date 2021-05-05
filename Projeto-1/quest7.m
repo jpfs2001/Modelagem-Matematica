@@ -38,6 +38,12 @@ for i = 3:n
   p = [p; sum/invg(1,1)];
 endfor
 
-printf("A proporção é de: \n");
+## Estrutura para formatar a saida de dados
+printf("A proporção é de: 0");
+for i = 2:n
+  printf(":%f", p(i,1));
+endfor
+
+printf("\n");
 disp(p);
 
