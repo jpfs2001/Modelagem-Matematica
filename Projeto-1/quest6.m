@@ -19,4 +19,4 @@ resultado = (p(3,1)/(aux(1,1) + aux(2,1))) * (aux(1,1) + aux(2,1) + aux(3,1) + a
 
 ## retornando o resultado
 
-printf("Para p5 ser maior retorno sustentavel, temos  p5 > %.2f", resultado);
+printf("Para p5 ser maior retorno sustentavel, temos  p5 > %.2f\n", resultado);
