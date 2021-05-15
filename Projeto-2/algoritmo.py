@@ -9,7 +9,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia pertencente ao intervalo [",D-d,",",D+d,"] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcular o brilho digitando o angulo VSE\n4 - Descobrir qual o angulo VSE quando brilho for máximo")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia pertencente ao intervalo [",D-d,",",D+d,"] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -22,8 +22,7 @@ def main():
         elif menu == 2:
             print("O brilho sera máximo na distancia r =", maxr()); 
         elif menu == 3:
-            teta = float(input("Digite o valor do angulo VSE EM GRAUS: "))
-            print("O brilho sera: ", R(teta))
+            print("O briho será máximo quando p =", pmax())
         elif menu == 4:
             print("O brilho será máximo quando VSE =", maxteta(),"Radianos")
         elif menu == 0:
@@ -46,12 +45,13 @@ def maxr():
 
     return l
 
-# função que encontra o brilho em função de teta
-def R(teta):
-    teta = (teta * math.pi)/180 # Trocando de graus para rad
-
+# função que p quando brilho for máximo
+def pmax():
     
-    return 1
+    r = maxr() # Pegando o valor máxido de r para usar na fórmula
+    p = (r**2 + d**2 + 2*d*r - D**2) / (4*d*r)
+    
+    return p
 
 # função que encontra o brilho máximo em funnção de teta
 def maxteta():
