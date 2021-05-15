@@ -1,3 +1,6 @@
+# Livrarias
+import math # Livraria com funções matemáticas
+
 # O projeto é separado por funções, sedo main a função responsável por chamar as outras funções
 # Variaveis globais que poderão ser acessadas de qualquer função
 d = 10.81 * (10**7) # Distancia entre sol e Venus
@@ -39,7 +42,9 @@ def b(r):
 
 # função que encontra o brilho maximo em função de r
 def maxr():
-    return 1
+    l = -2*d + math.sqrt(d**2 + 3 * (D**2))
+
+    return l
 
 # função que encontra o brilho em função de teta
 def R(teta):
