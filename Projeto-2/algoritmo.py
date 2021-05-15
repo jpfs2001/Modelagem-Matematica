@@ -2,6 +2,7 @@
 # Variaveis globais que poderão ser acessadas de qualquer função
 d = 10.81 * (10**7) # Distancia entre sol e Venus
 D = 14.95 * (10**7) # Distancia entre Sol e Terra
+k = 1 # Constante
 
 def main():
     # Legenda do Menu
@@ -12,12 +13,13 @@ def main():
         menu = int(input("Digte uma opção: "))
         
         if menu == 1:
-            r = int(input("Digite uma distância: "))
+            # A distância será multiplicada por 10^7 para facilitar o usuário a digitar no intervalo desejado
+            r = float(input("Digite uma distância * 10^7 : "))
             print("O brilho sera: ", b(r))
         elif menu == 2:
             print("O brilho sera máximo na distancia r =", maxr()); 
         elif menu == 3:
-            teta = int(input("Digite o valor do angulo VSE EM GRAUS: "))
+            teta = float(input("Digite o valor do angulo VSE EM GRAUS: "))
             print("O brilho sera: ", R(teta))
         elif menu == 4:
             print("O brilho será máximo quando VSE =", maxteta(),"Radianos")
@@ -30,7 +32,10 @@ def main():
 
 # função que encontra o brilho em função de r
 def b(r):
-    return 1
+    r = r * (10**7)
+    l = k * (2*d*r + r**2 + d**2 - D**2) / r**3 
+
+    return l
 
 # função que encontra o brilho maximo em função de r
 def maxr():
