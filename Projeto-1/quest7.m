@@ -47,3 +47,9 @@ endfor
 printf("\n");
 disp(p);
 
+ bar(p);
+ title("Relação entre preços");
+ xlabel("Classe");
+
+ 
+

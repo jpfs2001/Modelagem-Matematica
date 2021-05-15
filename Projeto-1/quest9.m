@@ -62,6 +62,24 @@ for i = 2:n
    endif
 endfor  
 
+## Algoritmo para calcular configuração inicial em função de s
+## Para retorno máximo sustentável, só havera arvores até k-1
+x = [];
+
+for i = 1:(k-1)
+  aux = (s/g(i,1)) * (1/sum);
+  x = [x; aux];
+endfor  
+
+for i = 1:(n-(k-1))
+  x = [x;0];
+endfor
+
+## Retorna a configuração inicial 
+
+fprintf("A configuração inicial será: \n");
+disp(x);
+
 ## Comando para mostrar o resultado
 fprintf("A maior valor  é de %.2f e é da classe %d", max*s, aux2);
   
