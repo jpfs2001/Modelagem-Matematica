@@ -48,11 +48,17 @@ def maxr():
 
 # função que encontra o brilho em função de teta
 def R(teta):
+    teta = (teta * math.pi)/180 # Trocando de graus para rad
+
+    
     return 1
 
 # função que encontra o brilho máximo em funnção de teta
 def maxteta():
-    return 1
+    r = maxr() # Pegando o valor máxido de r para usar na fórmula
+    teta = math.acos((d**2 + D**2 - r**2) / (2*d*D))
+    print((teta * 180)/math.pi)
+    return teta
 
 main()
 
