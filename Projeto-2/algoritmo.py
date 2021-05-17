@@ -9,7 +9,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia pertencente ao intervalo [",D-d,",",D+d,"] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia pertencente ao intervalo [",D-d,",",D+d,"] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -24,7 +24,7 @@ def main():
         elif menu == 3:
             print("O briho será máximo quando p =", pmax())
         elif menu == 4:
-            print("O brilho será máximo quando VSE =", maxteta(),"Radianos")
+            print("O brilho será máximo quando VSE =", maxtetha(),"Radianos")
         elif menu == 0:
             break
         else:
@@ -35,30 +35,32 @@ def main():
 # função que encontra o brilho em função de r
 def b(r):
     r = r * (10**7)
-    l = k * (2*d*r + r**2 + d**2 - D**2) / r**3 
+    B = k * (2*d*r + r**2 + d**2 - D**2) / (4 * d * r**3)
 
-    return l
+    return B
 
 # função que encontra o brilho maximo em função de r
 def maxr():
-    l = -2*d + math.sqrt(d**2 + 3 * (D**2))
+    B = -2*d + math.sqrt(d**2 + 3 * (D**2))
 
-    return l
+    return B
 
 # função que p quando brilho for máximo
 def pmax():
     
     r = maxr() # Pegando o valor máxido de r para usar na fórmula
-    p = (r**2 + d**2 + 2*d*r - D**2) / (4*d*r)
+    p = (r**2 + d**2 + 2*d*r - D**2) / (4 * d * r)
     
     return p
 
-# função que encontra o brilho máximo em funnção de teta
-def maxteta():
+# função que encontra o brilho máximo em funnção de tetha
+def maxtetha():
     r = maxr() # Pegando o valor máxido de r para usar na fórmula
-    teta = math.acos((d**2 + D**2 - r**2) / (2*d*D))
-    print((teta * 180)/math.pi)
-    return teta
+    theta  = math.acos((d**2 + D**2 - r**2) / (2*d*D))
+    print((theta * 180) / math.pi)
+    return theta
 
+
+# Chama a função Main depois de já ter lido todas as funções
 main()
 
