@@ -22,11 +22,11 @@ def main():
             while True:
                 # A distância será multiplicada por 10^7 para facilitar o usuário a digitar no intervalo desejado
                 r = float(input("Digite uma distância em km (ela vai ser multiplicada por 10^7): "))
-                print("O brilho sera: ", b(r))
-
                 if(r >= 4.14 and r <= 25.76):
                         break
                 print("Valores fora do intervalo, tente outro valor!")
+            
+            print("O brilho sera: ", b(r))
 
         elif menu == 2:
             print("O brilho sera máximo na distancia r =", maxr()); 
