@@ -1,5 +1,8 @@
-# Livrarias
-import math # Livraria com funções matemáticas
+# importar as bibliotecas
+import math # Funções matemáticas
+import matplotlib as mpl # Biblioteca que permite a impressão de gráficos
+import numpy as np # Biblioteca que ajuda a trabalhar com grandes vetores
+from matplotlib import pyplot as plt 
 
 # O projeto é separado por funções, sedo main a função responsável por chamar as outras funções
 # Variaveis globais que poderão ser acessadas de qualquer função
@@ -9,7 +12,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n5 - Imprime um gráfico que mostra o brilho em função de theta\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -31,6 +34,8 @@ def main():
             print("O briho será máximo quando p =", pmax())
         elif menu == 4:
             print("O brilho será máximo quando VSE =", maxtetha(),"Radianos")
+        elif menu == 5:
+            graph()
         elif menu == 0:
             break
         else:
@@ -65,6 +70,21 @@ def maxtetha():
     theta  = math.acos((d**2 + D**2 - r**2) / (2*d*D))
     print((theta * 180) / math.pi)
     return theta
+
+def graph():
+    # parâmetro r vai receber 5000 valores entre D-d até D+d. Representa a distância da Terra a Vênus.
+    r = np.linspace((D-d), (D+d), 5000)
+
+    # as funções paramétricas
+    theta = np.arccos((D**2 + d**2 - r**2)/(2*d*D))
+    B = ((10**17)*(r**2 + d**2 + 2*d*r - D**2)/(4*d* r**3)) #multiplicamos por uma constante 10**17 apenas por conveniência dos valores de y no gráfico
+
+    # plotar no gráfico
+    plt.figure()
+    plt. plot(theta, B)
+    plt.xlabel('∠VST (rad)')
+    plt.ylabel('Brilho')
+    plt.show()
 
 
 # Chama a função Main depois de já ter lido todas as funções
