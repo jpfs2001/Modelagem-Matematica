@@ -12,7 +12,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n5 - Imprime um gráfico que mostra o brilho em função de theta\n")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo theta quando brilho for máximo e retorna um gráfico do brilho em função do ângulo θ\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -33,8 +33,7 @@ def main():
         elif menu == 3:
             print("O briho será máximo quando p =", pmax())
         elif menu == 4:
-            print("O brilho será máximo quando VSE =", maxtetha(),"Radianos")
-        elif menu == 5:
+            print("O brilho será máximo quando θ =", maxtetha(),"Radianos")
             graph()
         elif menu == 0:
             break
@@ -68,7 +67,6 @@ def pmax():
 def maxtetha():
     r = maxr() # Pegando o valor máxido de r para usar na fórmula
     theta  = math.acos((d**2 + D**2 - r**2) / (2*d*D))
-    print((theta * 180) / math.pi)
     return theta
 
 def graph():
@@ -82,7 +80,7 @@ def graph():
     # plotar no gráfico
     plt.figure()
     plt. plot(theta, B)
-    plt.xlabel('∠VST (rad)')
+    plt.xlabel('θ (rad)')
     plt.ylabel('Brilho')
     plt.show()
 
