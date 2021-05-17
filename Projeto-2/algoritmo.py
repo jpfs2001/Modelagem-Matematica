@@ -9,16 +9,22 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia pertencente ao intervalo [",D-d,",",D+d,"] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo VSE quando brilho for máximo\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
         menu = int(input("Digte uma opção: "))
-        
         if menu == 1:
-            # A distância será multiplicada por 10^7 para facilitar o usuário a digitar no intervalo desejado
-            r = float(input("Digite uma distância * 10^7 : "))
-            print("O brilho sera: ", b(r))
+            # Tratamento de dados para que o usuário só possa digitar um valor no intervalo
+            while True:
+                # A distância será multiplicada por 10^7 para facilitar o usuário a digitar no intervalo desejado
+                r = float(input("Digite uma distância em km (ela vai ser multiplicada por 10^7): "))
+                print("O brilho sera: ", b(r))
+
+                if(r >= 4.14 and r <= 25.76):
+                        break
+                print("Valores fora do intervalo, tente outro valor!")
+
         elif menu == 2:
             print("O brilho sera máximo na distancia r =", maxr()); 
         elif menu == 3:
