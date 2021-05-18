@@ -12,7 +12,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho digitando uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Descobrir qual o angulo theta quando brilho for máximo e retorna um gráfico do brilho em função do ângulo θ\n")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho em função de uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] que o usuário digita \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Calcula o brilho em função de um θ que o usuário digita\n5 - Descobrir qual o angulo θ quando brilho for máximo e retorna um gráfico do brilho em função do ângulo θ\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -22,18 +22,22 @@ def main():
             while True:
                 # A distância será multiplicada por 10^7 para facilitar o usuário a digitar no intervalo desejado
                 r = float(input("Digite uma distância em km (ela vai ser multiplicada por 10^7): "))
-                if(r >= 4.14 and r <= 25.76):
+                r = r * (10**7)
+                if(r >= (D-d) and r <= (D+d)):
                         break
                 print("Valores fora do intervalo, tente outro valor!")
             
-            print("O brilho sera: ", b(r))
+            print("O brilho sera: ", (b(r) / maxb()) * 100, "% do bilho máximo")
 
         elif menu == 2:
             print("O brilho sera máximo na distancia r =", maxr()); 
         elif menu == 3:
             print("O briho será máximo quando p =", pmax())
         elif menu == 4:
-            print("O brilho será máximo quando θ =", maxtetha(),"Radianos")
+            theta = float(input("Digite o valor de θ em graus: "))
+            print("O brilho será: ", (btheta(theta) / maxb()) * 100, "% do brilho máximo")
+        elif menu == 5:
+            print("O brilho será máximo quando θ =", maxtheta(),"Radianos")
             graph()
         elif menu == 0:
             break
@@ -44,7 +48,6 @@ def main():
 
 # função que encontra o brilho em função de r
 def b(r):
-    r = r * (10**7)
     B = k * (2*d*r + r**2 + d**2 - D**2) / (4 * d * r**3)
 
     return B
@@ -63,8 +66,8 @@ def pmax():
     
     return p
 
-# função que encontra o brilho máximo em funnção de tetha
-def maxtetha():
+# função que encontra o brilho máximo em funnção de theta
+def maxtheta():
     r = maxr() # Pegando o valor máxido de r para usar na fórmula
     theta  = math.acos((d**2 + D**2 - r**2) / (2*d*D))
     return theta
@@ -84,6 +87,15 @@ def graph():
     plt.ylabel('Brilho')
     plt.show()
 
+def btheta(theta):
+    theta = (theta * math.pi) / 180
+    r = math.sqrt(D**2 + d**2 - 2 * D * d * math.cos(theta)) # converte o ang theta em uma distancia r por lei dos cossenos
+    return b(r)
+
+# Função de brilho máximo para auxiliar em contas
+def maxb():
+    r = maxr() # r recebe valor que maximiza o brilho
+    return b(r)
 
 # Chama a função Main depois de já ter lido todas as funções
 main()
