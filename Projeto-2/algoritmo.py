@@ -12,7 +12,7 @@ k = 1 # Constante
 
 def main():
     # Legenda do Menu
-    print("Menu\n0 - Sair\n1 - Calcular o brilho em função de uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] que o usuário digita \n2 - Descobrir qual é a distância r quando brilho é máximo\n3 - Calcula p quando brilho é máximo\n4 - Calcula o brilho em função de um θ que o usuário digita\n5 - Descobrir qual o angulo θ quando brilho for máximo e retorna um gráfico do brilho em função do ângulo θ\n")
+    print("Menu\n0 - Sair\n1 - Calcular o brilho em função de uma distancia em km pertencente ao intervalo [4.14 * 10^7 , 25.76 * 10^7] que o usuário digita \n2 - Descobrir qual é a distância r quando brilho é máximo e retorna um gráfico do brilho em função da distância r\n3 - Calcula p quando brilho é máximo\n4 - Calcula o brilho em função de um θ que o usuário digita\n5 - Descobrir qual o angulo θ quando brilho for máximo e retorna um gráfico do brilho em função do ângulo θ\n")
 
     # Aqui sera usado um lupe infinito para que o usuário possa usar o código diversas vezes sem precisar execuar novamente
     while True: 
@@ -38,7 +38,7 @@ def main():
             print("O brilho será: ", (btheta(theta) / maxb()) * 100, "% do brilho máximo")
         elif menu == 5:
             print("O brilho será máximo quando θ =", maxtheta(),"Radianos")
-            graph()
+            graph2()
         elif menu == 0:
             break
         else:
@@ -52,11 +52,11 @@ def b(r):
 
     return B
 
-# função que encontra o brilho maximo em função de r
+# função que encontra o r quando o brilho é máximo
 def maxr():
-    B = -2*d + math.sqrt(d**2 + 3 * (D**2))
+    r = -2*d + math.sqrt(d**2 + 3 * (D**2))
 
-    return B
+    return r
 
 # função que p quando brilho for máximo
 def pmax():
@@ -66,13 +66,13 @@ def pmax():
     
     return p
 
-# função que encontra o brilho máximo em funnção de theta
+# função que encontra o theta quando brilho é máximo
 def maxtheta():
     r = maxr() # Pegando o valor máxido de r para usar na fórmula
     theta  = math.acos((d**2 + D**2 - r**2) / (2*d*D))
     return theta
 
-def graph():
+def graph2():
     # parâmetro r vai receber 5000 valores entre D-d até D+d. Representa a distância da Terra a Vênus.
     r = np.linspace((D-d), (D+d), 5000)
 
@@ -82,11 +82,12 @@ def graph():
 
     # plotar no gráfico
     plt.figure()
-    plt. plot(theta, B)
+    plt.plot(theta, B)
     plt.xlabel('θ (rad)')
     plt.ylabel('Brilho')
     plt.show()
 
+# Retorna o brilho em função do ângulo theta
 def btheta(theta):
     theta = (theta * math.pi) / 180
     r = math.sqrt(D**2 + d**2 - 2 * D * d * math.cos(theta)) # converte o ang theta em uma distancia r por lei dos cossenos
