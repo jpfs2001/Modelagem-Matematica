@@ -1,4 +1,5 @@
 # importar as bibliotecas
+# para a instalação do matplotlib, é necessário que o usuário execute o comando "pip install matplotlib" em seu terminal de comandos
 import math # Funções matemáticas
 import matplotlib as mpl # Biblioteca que permite a impressão de gráficos
 import numpy as np # Biblioteca que ajuda a trabalhar com grandes vetores
