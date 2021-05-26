@@ -1,10 +1,10 @@
 import xlrd
 
-def lerPlanilha(diretorio, comeca, tamanho):
+def lerPlanilha(diretorio, comeca, tamanho, pagina):
     # abrir planilha
     wb = xlrd.open_workbook(diretorio)
     # primeira página
-    sheet = wb.sheet_by_index(0)
+    sheet = wb.sheet_by_index(pagina-1)
     
     arr = []
 
