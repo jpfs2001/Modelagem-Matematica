@@ -1,14 +1,4 @@
-class Leontief:
-    def __init__(self, matriz, d):
-        # Diferença entre I e C
-        Dif = self.diferencaMatrizes(self.gerarIdentidade(len(matriz)), matriz)
-        # matriz de Leontief
-        L = self.inversa(Dif)
-        print(L)
-        # calcula o bendito x
-        x = self.multiplicacao(L, d)
-        print(x)
-        
+class Leontief:        
     def gerarIdentidade(self, tamanho):
         # resumindo, pega uma matriz vazia
         identidade = [0]*tamanho
@@ -62,13 +52,13 @@ class Leontief:
             l = []
             # calcula os cofatores e suas determinantes
             for j in range(0, len(matriz)):
-                l.append((-1)**(i+j) * self.determinanteLaplace(self.cofator(matriz, [i, j])))
+                l.append((-1)**(i+j) * self.determinanteLU(self.decomposicao(self.cofator(matriz, [i, j]))[1]))
             M.append(l)
         return self.transposta(M)
 
     def inversa(self, matriz):
         # a inversa de A pode ser dada por A^{-1} = adj(A)/det(A), por isso ela não existe se det(A) = 0
-        return self.multiplicacaoNumeroReal(self.adjunta(matriz), 1/self.determinanteLaplace(matriz))
+        return self.multiplicacaoNumeroReal(self.adjunta(matriz), 1/self.determinanteLU(self.decomposicao(matriz)[1]))
 
     def determinanteLaplace(self, matriz):
         # a determinante usando o método de Laplace utiliza os cofatores
@@ -100,12 +90,20 @@ class Leontief:
                 m[i][j] *= numero
         return m
 
-matriz = [
-    # m   a   s
-    [.1, .6, .6], # m
-    [.3, .2, 0], # a
-    [.3, .1, .1]  # s
-]
-d = [0, 18, 0]
+    def decomposicao(self, matriz):
+        tamanho = len(matriz)
+        L = self.gerarIdentidade(tamanho)
 
-Leontief(matriz, d)
+        U = matriz.copy()
+        for coluna in range(0, len(matriz)-1):
+            for linha in range(coluna+1, len(matriz)):
+                L[linha][coluna] = U[linha][coluna]/U[coluna][coluna]
+                for c in range(coluna, len(matriz)):
+                    U[linha][c] -= L[linha][coluna]*U[coluna][c]
+        return [L, U]
+
+    def determinanteLU(self, U):
+        det = 1
+        for i in range(0, len(U)):
+            det *= U[i][i]
+        return det
