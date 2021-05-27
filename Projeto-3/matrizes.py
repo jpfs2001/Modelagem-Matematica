@@ -1,4 +1,4 @@
-class Leontief:        
+class Matrizes:        
     def gerarIdentidade(self, tamanho):
         # resumindo, pega uma matriz vazia
         identidade = [0]*tamanho

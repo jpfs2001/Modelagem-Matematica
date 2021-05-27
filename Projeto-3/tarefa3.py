@@ -1,7 +1,7 @@
 from ler import lerPlanilha
-from geralLeontief import Leontief
+from matrizes import Matrizes
 
-l = Leontief()
+l = Matrizes()
 
 ### tarefa 3 ####
 # capturar dados
