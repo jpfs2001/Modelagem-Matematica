@@ -16,6 +16,13 @@ d1958 = [74000, 56000, 10500, 25000, 17500, 196000, 5000]
 
 d1964 = [99640, 75548, 14444, 33501, 23527, 263985, 65260]
 
-print("Matriz com nível de produção 1958: ", m.multiplicacao(matriz, d1958))
-    
-print("Matriz com nível de produção 1958: ", m.multiplicacao(matriz, d1964))
+x1958 =  m.multiplicacao(matriz, d1958)
+print("\nMatriz com nível de produção 1958: \n")
+for x in x1958:
+    print("[", round(x, 10), "]")
+
+
+x1964 = m.multiplicacao(matriz, d1964)
+print("\nMatriz com nível de produção 1964: \n")
+for x in x1964:
+    print("[", round(x, 10), "]")
