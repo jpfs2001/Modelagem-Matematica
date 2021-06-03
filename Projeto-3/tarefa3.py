@@ -1,7 +1,7 @@
 from ler import lerPlanilha
 from matrizes import Matrizes
 
-l = Matrizes()
+m = Matrizes()
 
 ### tarefa 3 ####
 # capturar dados
@@ -11,10 +11,10 @@ diretorio = "projeto-3/matriz.xls" # modelagem-matematica/projeto-3/matriz.xls
 matriz = lerPlanilha(diretorio, comeca, tamanhoMatriz, 14)
 
 # Diferença entre I e C
-Dif = l.diferencaMatrizes(l.gerarIdentidade(len(matriz)), matriz)
+Dif = m.diferencaMatrizes(m.gerarIdentidade(len(matriz)), matriz)
 # matriz de Leontief
-L = l.inversa(Dif)
-print("A matriz de Leontief é:")
+L = m.inversa(Dif)
+print("A matriz de Leontief é:\n")
 for a in L:
     print(a)
 
