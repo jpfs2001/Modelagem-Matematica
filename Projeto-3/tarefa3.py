@@ -15,7 +15,7 @@ Dif = l.diferencaMatrizes(l.gerarIdentidade(len(matriz)), matriz)
 # matriz de Leontief
 L = l.inversa(Dif)
 print("A matriz de Leontief é:")
-for a in L:
+for a in L: 
     print(a)
 
 #comparando o obtido com a tabela lá
