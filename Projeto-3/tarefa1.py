@@ -24,14 +24,14 @@ for a in a:
 # Diferença entre I e C
 Dif = m.diferencaMatrizes(m.gerarIdentidade(len(matriz)), matriz)
 # matriz de Leontief
-L = m.inversa(Dif)
+Leontief = m.inversa(Dif)
 
 print("\nMatriz Leontief: \n")
-for L in L:
+for L in Leontief:
     print(L)
 
 # 1.c
-x = m.multiplicacao(matriz, d)
+x = m.multiplicacao(Leontief, d)
 print("\nMatriz com nível de produção: \n")
 for x in x:
     print("[", round(x, 10), "]")
