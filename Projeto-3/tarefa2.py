@@ -26,10 +26,10 @@ Leontief = m.inversa(Dif)
 x1958 =  m.multiplicacao(Leontief, d1958)
 print("\nMatriz com nível de produção em 1958: \n")
 for x in x1958:
-    print("[", round(x, 10), "]")
+    print(f"[ {round(x, 10)} ]")
 
 
 x1964 = m.multiplicacao(Leontief, d1964)
 print("\nMatriz com nível de produção em 1964: \n")
 for x in x1964:
-    print("[", round(x, 10), "]")
+    print(f"[ {round(x, 10)} ]")

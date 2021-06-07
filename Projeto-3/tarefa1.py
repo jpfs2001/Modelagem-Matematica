@@ -18,7 +18,7 @@ for i in range(len(matriz)): #Matriz que percorre as linhas da matriz e multipli
 
 print("\nMatriz consumo para 100 unidades de agricultura: \n") 
 for a in a:
-    print("[", a, "]")
+    print(f"[ {a} ]")
 
 # 1.b
 # Diferença entre I e C
@@ -34,7 +34,7 @@ for L in Leontief:
 x = m.multiplicacao(Leontief, d)
 print("\nMatriz com nível de produção: \n")
 for x in x:
-    print("[", round(x, 10), "]")
+    print(f"[ {round(x, 10)} ]")
 
 
 
