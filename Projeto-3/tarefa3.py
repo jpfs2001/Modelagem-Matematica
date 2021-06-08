@@ -7,7 +7,7 @@ m = Matrizes()
 # capturar dados
 tamanhoMatriz = 12 # 12 x 12
 comeca = [3, 6] # H6 
-diretorio = "projeto-3/matriz.xls" # modelagem-matematica/projeto-3/matriz.xls
+diretorio = "./matriz.xls" # modelagem-matematica/projeto-3/matriz.xls
 matriz = lerPlanilha(diretorio, comeca, tamanhoMatriz, 14)
 
 # Diferença entre I e C
