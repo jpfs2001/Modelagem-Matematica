@@ -108,3 +108,9 @@ class Matrizes:
         for i in range(0, len(U)):
             det *= U[i][i]
         return det
+    
+    def inverterLinha(self, x):
+        aux = []
+        for i in x:
+            aux.append([i]) 
+        return(aux)
