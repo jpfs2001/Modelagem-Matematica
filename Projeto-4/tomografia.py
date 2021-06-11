@@ -3,7 +3,6 @@ from numpy.core.fromnumeric import transpose
 from matrizes import Matrizes
 l = Matrizes()
 
-
 class Tomografia:
 
     def __init__(self):
@@ -12,13 +11,9 @@ class Tomografia:
 
         for i in range(len(x)):
             print("x", i+1, ": ", x[i])
-        
-
-        
 
     def densidade(self, a, at, b):
 
-        
         x0 = np.array([[1], [3]]) #Ponto "aleatório" usado como ponto inicial
         x = [] 
         
@@ -60,7 +55,6 @@ at = np.array([
     [[1], [-2]],
     [[3], [-1]]
 ])
-
 
 # at = []
 # for a in a:
