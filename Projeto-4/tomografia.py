@@ -7,14 +7,15 @@ class Tomografia:
 
     def __init__(self):
 
-        x = self.densidade(a, at, b)
+        x = self.densidade(a, at, b, x0)
 
         for i in range(len(x)):
-            print("x", i+1, ": ", x[i])
+            print(f"x {i+1}: {x[i]}")
+    
 
-    def densidade(self, a, at, b):
+    def densidade(self, a, at, b, x0):
 
-        x0 = np.array([[1], [3]]) #Ponto "aleatório" usado como ponto inicial
+         #Ponto "aleatório" usado como ponto inicial
         x = [] 
         
         for k in range(50): # Estrutura de repetição para aumentar a precisão dos resultados
@@ -25,16 +26,16 @@ class Tomografia:
                 
                 if(i == 0): # caso esteja na primeira repetição, o algorítmo usará o x0 no lugar do x[i-1]
 
-                    aux = np.matmul(at[i], ( (b[i] - np.matmul(transpose(a[i]), x0)) / (np.matmul(np.transpose(a[i]), a[i]))) )
-
+                    aux = np.matmul(a[i], ( (b[i] - np.matmul(at[i], x0)) / (np.matmul(at[i], a[i]))) )
+                    
                     aux = l.inverterLinha(aux)
-
+                    
                     x.append(np.sum([x0, aux], axis=0))
 
                 else:
 
-                    aux = np.matmul(at[i], ((b[i] - np.matmul(transpose(a[i]), x[i-1])) / (np.matmul(np.transpose(a[i]), a[i]))))
-
+                    aux = np.matmul(a[i], ( (b[i] - np.matmul(at[i], x[i-1])) / (np.matmul(at[i], a[i]))) )
+                    
                     aux = l.inverterLinha(aux)
 
                     x.append(np.sum([x[i-1], aux], axis=0))
@@ -42,15 +43,15 @@ class Tomografia:
                 if(i == (len(a)-1)):
                     x0 = x[i]
 
-        return x
+        return x    
 
-a = np.array([
+at = np.array([
     [1, 1],
     [1, -2],
     [3, -1]
 ])
 
-at = np.array([
+a = np.array([
     [[1], [1]],
     [[1], [-2]],
     [[3], [-1]]
@@ -60,6 +61,7 @@ at = np.array([
 # for a in a:
 #     at.append(l.inverterLinha(a))
 #tentativa falha de inverter a (os valores e o formato ficam exatamente como precisa, mas não funciona nos cálculos)
+x0 = np.array([[1], [3]])
 
 b = np.array([
     2,
