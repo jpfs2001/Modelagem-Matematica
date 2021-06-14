@@ -3,15 +3,7 @@ from numpy.core.fromnumeric import transpose
 from matrizes import Matrizes
 l = Matrizes()
 
-class Tomografia:
-
-    def __init__(self):
-
-        x = self.densidade(a, at, b, x0)
-
-        for i in range(len(x)):
-            print(f"x {i+1}: {x[i]}")
-    
+class Tomografia:    
 
     def densidade(self, a, at, b, x0):
 
@@ -45,28 +37,6 @@ class Tomografia:
 
         return x    
 
-at = np.array([
-    [1, 1],
-    [1, -2],
-    [3, -1]
-])
 
-a = np.array([
-    [[1], [1]],
-    [[1], [-2]],
-    [[3], [-1]]
-])
 
-# at = []
-# for a in a:
-#     at.append(l.inverterLinha(a))
-#tentativa falha de inverter a (os valores e o formato ficam exatamente como precisa, mas não funciona nos cálculos)
-x0 = np.array([[1], [3]])
 
-b = np.array([
-    2,
-    -2,
-    3
-])
-
-Tomografia()

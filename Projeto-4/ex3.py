@@ -1,8 +1,10 @@
+from matrizes import Matrizes
 import numpy as np
 from numpy.core.fromnumeric import transpose
 from tomografia import Tomografia
 
 t = Tomografia()
+m = Matrizes()
 
 at = np.array([
     [0, 0, 0, 0, 0, 0, 1, 1, 1],
@@ -33,6 +35,8 @@ a = np.array([
     [[1], [0], [0], [0], [1], [0], [0], [0], [1]],
     [[0], [0], [0], [1], [0], [0], [1], [1], [0]]
 ])
+
+
 
 
 b = np.array([
