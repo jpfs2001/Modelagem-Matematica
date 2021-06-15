@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Título</title>
+    <style>
+        body {
+            background: #212121
+        }
+        table {
+            border: 1px solid white;
+            background: black;
+        }
+        td {
+            width: 10px;
+            height: 10px;
+            /* border: 1px solid white; */
+            cursor: pointer;
+        }
+        #salvamento {
+            width: 80%;
+            overflow-wrap: break-word;
+            color: white;
+            padding: 15px;
+            border: 1px solid white;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <table id="tabela">
+
+    </table>
+
+    <button id="salvar">Salvar</button>
+    <div id="salvamento"></div>
+
+    <script>
+        
+        const tabela = document.getElementById('tabela')
+
+        corSelecionada = 0
+        selecionado = 0
+        document.onkeydown = (e) => {
+            if(e.key == "w"){
+                selecionado = 1
+                corSelecionada = 3
+            }
+            else if(e.key == "a"){
+                selecionado = 1
+                corSelecionada = 2
+            }
+            else if(e.key == "s"){
+                selecionado = 1
+                corSelecionada = 1
+            }
+        }
+        document.onkeyup = (e) => {
+            if(e.key == "w" || e.key == "a" || e.key == "s"){
+                selecionado = 0
+            }
+        }
+
+        quantidade = 150
+
+        elementos = []
+
+        for(let i = 0; i < quantidade; i++){
+            let tr = document.createElement("tr")
+            linha = []
+            for(let j = 0; j < quantidade; j++){
+                let td = document.createElement('td')
+                td.id = `td_${i}_${j}`
+                td.onmouseenter = () => {
+                    if(selecionado == 1){
+                        t = td.id.split('_')
+                        console.log(corSelecionada)
+                        assinar([t[1], t[2]], corSelecionada)
+                    }
+                }
+                td.onclick = () => {
+                    t = td.id.split('_')
+                    assinar([t[1], t[2]], 3)
+                }
+                tr.appendChild(td)
+                linha.push(0)
+            }
+            elementos.push(linha)
+            tabela.appendChild(tr)
+        }
+
+        function assinar(id, cor){
+            cores = ['transparent', 'darkgray', 'gray', 'white']
+            valores = [0, .33, .66, 1]
+            el = document.getElementById(`td_${id[0]}_${id[1]}`)
+            if(elementos[id[0]][id[1]] == 0){
+                el.style.backgroundColor = cores[cor]
+                elementos[id[0]][id[1]] = valores[cor]
+            }
+            else{
+                el.style.backgroundColor = 'transparent'
+                elementos[id[0]][id[1]] = 0
+            }
+        }
+
+        document.getElementById("salvar").onclick = () => {
+            console.log(elementos)
+            document.getElementById('salvamento').innerText = ""
+            for(let i = 0; i < elementos.length; i++){
+                document.getElementById('salvamento').innerText += `[${elementos[i]}],`
+            }
+            setTimeout(() => {
+                navigator.clipboard.writeText(document.getElementById('salvamento').innerText);
+            }, 1500)
+        }
+    </script>
+</body>
+</html>
