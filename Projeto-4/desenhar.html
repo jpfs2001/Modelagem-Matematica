@@ -30,6 +30,8 @@
     </style>
 </head>
 <body>
+	<input id="quantidadePixels" style='color=white'><button id='ir'>Ir</button>
+
     <table id="tabela">
 
     </table>
@@ -38,6 +40,13 @@
     <div id="salvamento"></div>
 
     <script>
+        elementos = []
+	
+		document.getElementById('ir').onclick = () => {
+			quantidade = quantidadePixels.value
+			tabela.innerHTML = ""
+			fazer(quantidade)
+		}
         
         const tabela = document.getElementById('tabela')
 
@@ -62,59 +71,64 @@
                 selecionado = 0
             }
         }
+		tabela.innerHTML = ""
+        quantidade = 30
+		fazer(quantidade)
+		
 
-        quantidade = 150
+		function fazer(quantidade){
+			for(let i = 0; i < quantidade; i++){
+				let tr = document.createElement("tr")
+				linha = []
+				for(let j = 0; j < quantidade; j++){
+					let td = document.createElement('td')
+					td.id = `td_${i}_${j}`
+					td.onmouseenter = () => {
+						if(selecionado == 1){
+							t = td.id.split('_')
+							console.log(corSelecionada)
+							assinar([t[1], t[2]], corSelecionada)
+						}
+					}
+					td.onclick = () => {
+						t = td.id.split('_')
+						assinar([t[1], t[2]], 3)
+					}
+					tr.appendChild(td)
+					linha.push(0)
+				}
+				elementos.push(linha)
+				tabela.appendChild(tr)
+			}
+		}
+		
+		function assinar(id, cor){
+				cores = ['transparent', 'darkgray', 'gray', 'white']
+				valores = [0, .33, .66, 1]
+				el = document.getElementById(`td_${id[0]}_${id[1]}`)
+				if(elementos[id[0]][id[1]] == 0){
+					el.style.backgroundColor = cores[cor]
+					elementos[id[0]][id[1]] = valores[cor]
+				}
+				else{
+					el.style.backgroundColor = 'transparent'
+					elementos[id[0]][id[1]] = 0
+				}
+			}
 
-        elementos = []
-
-        for(let i = 0; i < quantidade; i++){
-            let tr = document.createElement("tr")
-            linha = []
-            for(let j = 0; j < quantidade; j++){
-                let td = document.createElement('td')
-                td.id = `td_${i}_${j}`
-                td.onmouseenter = () => {
-                    if(selecionado == 1){
-                        t = td.id.split('_')
-                        console.log(corSelecionada)
-                        assinar([t[1], t[2]], corSelecionada)
-                    }
-                }
-                td.onclick = () => {
-                    t = td.id.split('_')
-                    assinar([t[1], t[2]], 3)
-                }
-                tr.appendChild(td)
-                linha.push(0)
-            }
-            elementos.push(linha)
-            tabela.appendChild(tr)
-        }
-
-        function assinar(id, cor){
-            cores = ['transparent', 'darkgray', 'gray', 'white']
-            valores = [0, .33, .66, 1]
-            el = document.getElementById(`td_${id[0]}_${id[1]}`)
-            if(elementos[id[0]][id[1]] == 0){
-                el.style.backgroundColor = cores[cor]
-                elementos[id[0]][id[1]] = valores[cor]
-            }
-            else{
-                el.style.backgroundColor = 'transparent'
-                elementos[id[0]][id[1]] = 0
-            }
-        }
-
-        document.getElementById("salvar").onclick = () => {
-            console.log(elementos)
-            document.getElementById('salvamento').innerText = ""
-            for(let i = 0; i < elementos.length; i++){
-                document.getElementById('salvamento').innerText += `[${elementos[i]}],`
-            }
-            setTimeout(() => {
-                navigator.clipboard.writeText(document.getElementById('salvamento').innerText);
-            }, 1500)
-        }
+			document.getElementById("salvar").onclick = () => {
+				console.log(elementos)
+				document.getElementById('salvamento').innerText = ""
+				for(let i = 0; i < elementos.length; i++){
+					document.getElementById('salvamento').innerText += `[${elementos[i]}],`
+				}
+				setTimeout(() => {
+					navigator.clipboard.writeText(document.getElementById('salvamento').innerText);
+				}, 1500)
+			}
+		
+	
+        
     </script>
 </body>
 </html>
