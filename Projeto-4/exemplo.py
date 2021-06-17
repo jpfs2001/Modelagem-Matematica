@@ -4,27 +4,17 @@ from tomografia import Tomografia
 
 t = Tomografia()
 
-at = np.array([
-    [1, 1],
-    [1, -2],
-    [3, -1]
-])
-
 a = np.array([
     [[1], [1]],
     [[1], [-2]],
     [[3], [-1]]
 ])
 
-x0 = np.array([[1], [3]])
-
 b = np.array([
     2,
     -2,
     3
 ])
-
-
 
 x = t.densidade(a, b)
 
