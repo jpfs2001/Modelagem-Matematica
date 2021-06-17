@@ -3,8 +3,6 @@ from matrizes import Matrizes
 m = Matrizes()
 
 # pixels, dada uma quantidade e um intervalo
-
-
 def pontos(n, t):
     P = [0]*n
 
@@ -18,47 +16,58 @@ def pontos(n, t):
     return P
 
 # ponto de mínimo
-
-
-def minimo(f):
+def minimo(f, n, t):
     [a, b] = f
-    if b < 0:
-        return [-b/a, 0]
+    if a > 0:
+        if b < 0:
+            return [-b/a, 0]
+        else:
+            return [0, b]
     else:
-        return [0, b]
+        # verifica primeiro se o mínimo cartesiano está dentro do escopo
+        if 0 <= -b/a <= n*t:
+            # o mínimo será quando a reta atravessar y = 0, então x = -b/a
+            return [-b/a, 0]
+        elif 0 <= a*n*t+b <= n*t:
+            return [n*t, a*n*t+b]
 
 # ponto de máximo, quem chega primeiro ao limite: x ou y?
-
-
 def maximo(n, t, f):
     [a, b] = f
-    maxy = a*n*t+b
-    maxx = (n*t-b)/a
+    if a > 0:
+        maxy = a*n*t+b
+        maxx = (n*t-b)/a
+        # retornar o valor inserido e o valor calculado
+        if maxy < maxx:
+            return [n*t, maxy]
+        else:
+            return [maxx, n*t]
 
-    # retornar o valor inserido e o valor calculado
-    if maxy < maxx:
-        return [n*t, maxy]
-    else:
-        return [maxx, n*t]
+    elif a < 0:
+        # o máximo será quando a reta atravessar o eixo y e estiver dentro do limite de pixels ou quando seu y for igual ao limite
+        # no primeiro caso, x = 0 e b = y
+        if 0 <= b <= n*t:
+            return [0, b]
+        # no segundo caso, y = n*t e x = (n*t-b)/a
+        elif 0 <= n*t/a - b/a <= n*t:
+            return [(n*t-b)/a, n*t]
+
+
 
 # captura os pontos em determinado intervalo
-
-
-def intervalo(P, min, max):
+def intervalo(n, P, min, max):
     a = []
     for i in range(n):
         for j in range(n):
-            if i+1 >= min[0] and i+1 <= max[0] and j+1 >= min[1] and j+1 <= max[1]:
+            if (min[0] <= i+1 <= max[0] or min[0] >= i+1 >= max[0]) and (min[1] <= j+1 <= max[1] or min[1] >= j+1 >= max[1]):
                 try:
                     a[i].append(P[i][j])
                 except:
                     a.append([])
-                    a[i].append(P[i][j])
+                    a[-1].append(P[i][j])
     return a
 
 # calcula os pontos de intersecção da reta com o pixel dado um valor inicial, o tamanho do pixel e a função
-
-
 def maximoY(i, t, f):
 	[a, b] = f
 	if a*i+b < 0:
@@ -82,31 +91,36 @@ def ver(f, t, p):
     x0n = (p[1]-t/2-b)/a
     y0m = a*(p[0]+t/2)+b
     y0n = a*(p[0]-t/2)+b
-    print(f'p: {p[0]}')
-    print(f'lista: {x0m, x0n, y0m, y0n}')
     pontos = []
     if (p[0] - t/2 <= x0n <= p[0] + t/2) and len(pontos) < 2 and [round(x0n, 5), round(a*x0n+b, 5)] not in pontos:
-        print('1')
+        # print('1')
         pontos.append([round(x0n, 5), round(a*x0n+b, 5)])
     if (p[0] - t/2 <= x0m <= p[0] + t/2) and len(pontos) < 2 and [round(x0m, 5), round(a*x0m+b, 5)] not in pontos:
-        print('2')
+        # print('2')
         pontos.append([round(x0m, 5), round(a*x0m+b, 5)])
     if (p[1] - t/2 <= y0m <= p[1] + t/2) and len(pontos) < 2 and [round((y0m-b)/a, 5), round(y0m, 5)] not in pontos:
-        print('3')
+        # print('3')
         pontos.append([round((y0m-b)/a, 5), round(y0m, 5)])
     if (p[1] - t/2 <= y0n <= p[1] + t/2) and len(pontos) < 2 and [round((y0n-b)/a, 5), round(y0n, 5)] not in pontos:
-        print('4')
+        # print('4')
         pontos.append([round((y0n-b)/a, 5), round(y0n, 5)])
     return pontos
 
 # calcula quais pixels são atravessados por um determinado feixe f, dado a grade de possíveis p, a quantidade n e o tamanho t dos pixels
 def estaNoPontoP(f, p, n, t):
-    P = intervalo(p, minimo([1.57, -0.12]), maximo(n, t, [1.57, -0.12]))
-    listaPossiveis = []
 
+    if f[0] > 0:
+        P = intervalo(n, p, minimo(f, n, t), maximo(n, t, f))
+    else:
+        P = intervalo(n, p, maximo(n, t, f), minimo(f, n, t))
+        
+    listaPossiveis = []
     for linha in P:
-        maximos = maximoY(linha[0][0]-t/2, t, f)
-        [p0, p1] = maximos
+        if f[0] > 0:
+            [p0, p1] = maximoY(linha[0][0]-t/2, t, f)
+        else:
+            [p0, p1] = ver(f, t, linha[0])            
+
         for p in linha: 
             if p0[0]-t/2 <= p[0] <= p1[0]+t/2 and p0[1]-t/2 <= p[1] <= p1[1]+t/2 and p not in listaPossiveis: 
                 listaPossiveis.append(p)
@@ -160,7 +174,6 @@ def verticesProximos(f, g, p, t):
         vertices.remove([p[0], f[0]*p[0]+f[1]])
         pontosProximos = vertices.copy()
     
-    print(pontosProximos)
     return pontosProximos
 
 # verifica qual seção de área deve ser considerada
@@ -195,15 +208,9 @@ def porcentagem(f, g, t, p):
     # se quiser mudar para o valor ficar decimal, bota 1. Se quiser percentual, bota 100
     percentualValor = 1
     pts = ver(f, t, p)
-    print(f'g: {pts}\n')
 
     # verifica qual área deve ser calculada
     qual = qualArea(f, g, p, t)
-
-    # verifica os pontos de intersecção da outra reta
-    ptsOutra = ver(g, t, p)
-    print(f'qual: {qual}')
-    # se o qual tiver len 2 e 
 
     if qual == t*t:
         return percentualValor
@@ -281,64 +288,108 @@ def retasSobreMesmoPixel(f, g, p, t):
     areaDeInterseccao = porcentagem(f, g, t, p) + porcentagem(g, f, t, p) - percentualValor
     return areaDeInterseccao
 
-
-f = [1.57, -.12] # equação do feixe
-g = [1.57, -2.12]
-n = 16 # tamanho da tela n x n
-t = 2 # tamanho do pixel
-p = pontos(n, t) # pixels da tela
-
-# print(porcentagem(f, g, t, [3, 3]))
-# print(retasSobreMesmoPixel(f, g, [1, 1], t))
-
-pontosDeF = estaNoPontoP(f, p, n, t)
-pontosDeG = estaNoPontoP(g, p, n, t)
-st = ""
-
-for po in pontosDeF:
-    if po not in pontosDeG:
-        porc = porcentagem(f, g, t, po)
-        st += f"\n\n Ponto: {po} \n Funcao: {f} \n Porcentagem: {porc}"
-        # print(f'\n\n Ponto: {po} \n Função: {f} \n Porcentagem: {porc}')
-    else:
-        print(f'\n\n\n f: {f} / g: {g} / po: {po}')
-        porc = retasSobreMesmoPixel(f, g, po, t)
-        st += f'\n\n Ponto: {po} \n Funcoes: {f} e {g} \n Porcentagem: {porc}'
-        # print(f'\n\n Ponto: {po} \n Funções: {f} e {g} \n Porcentagem: {porc}')
-
-for po in pontosDeG:
-    if po not in pontosDeF:
-        porc = porcentagem(g, f, t, po)
-        st += f"\n\n Ponto: {po} \n Funcao: {g} \n Porcentagem: {porc}"
-        # print(f'\n\n Ponto: {po} \n Função: {g} \n Porcentagem: {porc}')
-
-c = open('./a/a.txt', 'w')
-c.write(st)
-c.close()
-
-print('foi!')
-
-
-# isso passa as coordenadas para serem plotadas no gnu
-def plotNoGnu():
+# isso passa as coordenadas para um txt no formato do GNUplot
+def plotNoGnu(dados, p, t, funcoes):
     txt = "# X Y\n"
-    for pa in pontosDeG:
+    for pa in dados:
         txt += f"{pa[0]} {pa[1]}\n"
-    for pa in pontosDeF:
-        txt += f"{pa[0]} {pa[1]}\n"
-    c = open('./a/dados.txt', 'w')
-    c.write(txt)
-    c.close()
+    aDados = open('./a/dados.txt', 'w')
+    aDados.write(txt)
+    aDados.close()
 
-    w = open('./a/retangulos.txt', 'w')
+    # plota os pixels na tela
+    arqRetangulos = open('./a/retangulos.txt', 'w')
     txt = ""
     iterador = 1
     for linha in p:
         for pix in linha:
             txt += f"set object {iterador} rect from {pix[0]-t/2},{pix[1]-t/2} to {pix[0]+t/2},{pix[1]+t/2}\n"
             iterador += 1
-    txt += f"replot {f[0]}*x+{f[1]}\nreplot {g[0]}*x+{g[1]}"
-    w.write(txt)
-    w.close()
-plotNoGnu()
+    # plota as funções
+    for i in range(len(funcoes)):
+        funcao = funcoes[i]
+        re = ""
+        if i >= 1:
+            re = "re"
+        txt += f"{re}plot {funcao[0]}*x+{funcao[1]}\n"
+    # salva
+    arqRetangulos.write(txt)
+    arqRetangulos.close()
+
+def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t, p, salvarGNU):
+
+    # se for maior que t*sqrt(2), utilizar iterações
+    # caso em que o tamanho do feixe não supera t*sqrt(2)
+    [a, b] = funcaoInicial
+    f = [a, b+(tamanhoFeixe/2)*(a*a+1)**0.5]
+    g = [a, b-(tamanhoFeixe/2)*(a*a+1)**0.5]
+
+    # captura os pixels os quais as retas passam
+    pontosDeF = estaNoPontoP(f, p, n, t)
+    pontosDeG = estaNoPontoP(g, p, n, t)
+
+    # se quiser salvar no formato GNU
+    if salvarGNU:
+        plotNoGnu(pontosDeF + pontosDeG, p, t, [f, g])
+
+    # onde os dados serão guardados
+    dados = []
+
+    # calcula para os pontos de F e F inter G
+    for pix in pontosDeF:
+        # se g não tiver atravessado ele
+        if pix not in pontosDeG:
+            # calcula a porcentagem da área
+            porc = porcentagem(f, g, t, pix)
+            # adiciona a lista de dados
+            dados.append([
+                [f], # função
+                pix, # pixel calculado
+                porc # porcentagem
+            ])
+        # se g tiver atravessado
+        else:
+            # elimina de G para agilizar na hora de calcular somente os pixels de G
+            pontosDeG.remove(pix)
+            # calcula a porcentagem
+            porc = retasSobreMesmoPixel(f, g, pix, t)
+            dados.append([
+                [f, g], # função
+                pix, # pixel calculado
+                porc # porcentagem
+            ])
+    # calcula para os pontos de G
+    for pix in pontosDeG:
+        # calcula a porcentagem
+        porc = porcentagem(g, f , t, pix)
+        dados.append([
+            [g], # função
+            pix, # pixel calculado
+            porc # porcentagem
+        ])
+    
+    return dados
+
+def armazenarEmTxt(dados, arquivo):
+    txt = ""
+    for dado in dados:
+        txt += f"Funcao(oes): {dado[0]}\n"
+        txt += f"Pixel: {dado[1]}\n"
+        txt += f"Coeficiente: {dado[2]}\n\n"
+    arq = open(arquivo, 'w')
+    arq.write(txt)
+    arq.close()
+
+feixe = [1.57, -1.12] # equação do feixe
+n = 16 # tamanho da tela n x n
+t = 2 # tamanho do pixel
+p = pontos(n, t) # pixels da tela
+
+tamanhoFeixe = 1.0744461230854325
+
+armazenarEmTxt(simularParaFeixe(feixe, tamanhoFeixe, n, t, p, True), './a/a.txt')
+
+
+print('foi!')
+
 

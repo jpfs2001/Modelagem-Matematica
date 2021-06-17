@@ -1,145 +1,144 @@
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [1, 1]
+Coeficiente: 0.6433125
 
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [1, 3]
+Coeficiente: 0.08283420000000001
 
- Ponto: [1, 1] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.5604783
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [3, 3]
+Coeficiente: 0.5509870000000001
 
- Ponto: [1, 3] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.08283420000000001
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [3, 5]
+Coeficiente: 0.36738930000000014
 
- Ponto: [3, 3] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.5509870000000001
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [3, 7]
+Coeficiente: 0.0020382000000000043
 
- Ponto: [3, 5] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.36738930000000014
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [5, 7]
+Coeficiente: 0.8420057249999999
 
- Ponto: [3, 7] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.0020382000000000043
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [5, 9]
+Coeficiente: 0.13455487500000013
 
- Ponto: [5, 7] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.8420057249999999
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [7, 9]
+Coeficiente: 0.46895025
 
- Ponto: [5, 9] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.13455487500000013
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [7, 11]
+Coeficiente: 0.44318375
 
- Ponto: [7, 9] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.46895025
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [7, 13]
+Coeficiente: 0.015413749999999966
 
- Ponto: [7, 11] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.44318375
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [9, 13]
+Coeficiente: 0.746592275
 
- Ponto: [7, 13] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.015413749999999966
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [9, 15]
+Coeficiente: 0.19875807500000006
 
- Ponto: [9, 13] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.746592275
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [11, 15]
+Coeficiente: 0.3993947999999996
 
- Ponto: [9, 15] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.19875807500000006
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [11, 17]
+Coeficiente: 0.5064960000000003
 
- Ponto: [11, 15] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.3993947999999996
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [11, 19]
+Coeficiente: 0.041274000000000054
 
- Ponto: [11, 17] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.5064960000000003
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [13, 19]
+Coeficiente: 0.6511788250000001
 
- Ponto: [11, 19] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.041274000000000054
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [13, 21]
+Coeficiente: 0.27544507500000015
 
- Ponto: [13, 19] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.6511788250000001
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [15, 21]
+Coeficiente: 0.342325475
 
- Ponto: [13, 21] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.27544507500000015
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [15, 23]
+Coeficiente: 0.5573250000000001
 
- Ponto: [15, 21] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.342325475
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [15, 25]
+Coeficiente: 0.0796174999999999
 
- Ponto: [15, 23] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.5573250000000001
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [17, 25]
+Coeficiente: 0.5573250000000001
 
- Ponto: [15, 25] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.0796174999999999
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [17, 27]
+Coeficiente: 0.361497025
 
- Ponto: [17, 25] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.5573250000000001
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [17, 29]
+Coeficiente: 0.0015604750000000175
 
- Ponto: [17, 27] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.361497025
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [19, 29]
+Coeficiente: 0.8488211749999999
 
- Ponto: [17, 29] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.0015604750000000175
+Funcao(oes): [[1.57, -0.1200000000000001]]
+Pixel: [19, 31]
+Coeficiente: 0.13044640000000007
 
- Ponto: [19, 29] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.8488211749999999
+Funcao(oes): [[1.57, -0.1200000000000001], [1.57, -2.12]]
+Pixel: [21, 31]
+Coeficiente: 0.47439399999999976
 
- Ponto: [19, 31] 
- Funcao: [1.57, -0.12] 
- Porcentagem: 0.13044640000000007
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [3, 1]
+Coeficiente: 0.0764645
 
- Ponto: [21, 31] 
- Funcoes: [1.57, -0.12] e [1.57, -2.12] 
- Porcentagem: 0.47439399999999976
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [5, 5]
+Coeficiente: 0.26955309999999993
 
- Ponto: [3, 1] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.0764645
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [7, 7]
+Coeficiente: 0.03901275
 
- Ponto: [5, 5] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.26955309999999993
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [9, 11]
+Coeficiente: 0.1937578499999999
 
- Ponto: [7, 7] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.03901275
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [11, 13]
+Coeficiente: 0.014044799999999968
 
- Ponto: [9, 11] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.1937578499999999
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [13, 17]
+Coeficiente: 0.13044640000000002
 
- Ponto: [11, 13] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.014044799999999968
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [15, 19]
+Coeficiente: 0.001560475000000001
 
- Ponto: [13, 17] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.13044640000000002
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [17, 23]
+Coeficiente: 0.0796174999999999
 
- Ponto: [15, 19] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.001560475000000001
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [19, 27]
+Coeficiente: 0.2754450749999998
 
- Ponto: [17, 23] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.0796174999999999
+Funcao(oes): [[1.57, -2.12]]
+Pixel: [21, 29]
+Coeficiente: 0.04127399999999992
 
- Ponto: [19, 27] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.2754450749999998
-
- Ponto: [21, 29] 
- Funcao: [1.57, -2.12] 
- Porcentagem: 0.04127399999999992
