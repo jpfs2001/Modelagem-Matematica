@@ -54,13 +54,9 @@ b = np.array([
     7.04
 ])
 
-# print(at)
-
 x0 = np.array([[0], [0], [0], [0], [0], [0], [0], [0], [0]])
 
-x = t.densidade(a, at, b, x0)
+x = t.densidade(a, b)
 
-
-
-for i in range(len(x)):
-    print(f"x {i+1}: {x[i]}")
+# for i in range(len(x)):
+#     print(f"x {i+1}: {x[i]}")

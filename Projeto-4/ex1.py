@@ -26,7 +26,7 @@ b = np.array([
 
 
 
-x = t.densidade(a, at, b, x0)
+x = t.densidade(a, b)
 
 for i in range(len(x)):
     print(f"x {i+1}: {x[i]}")
