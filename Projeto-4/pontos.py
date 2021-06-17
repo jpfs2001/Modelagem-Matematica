@@ -312,28 +312,33 @@ for po in pontosDeG:
         st += f"\n\n Ponto: {po} \n Funcao: {g} \n Porcentagem: {porc}"
         # print(f'\n\n Ponto: {po} \n Função: {g} \n Porcentagem: {porc}')
 
-c = open('dados.txt', 'w')
+c = open('./a/a.txt', 'w')
 c.write(st)
 c.close()
 
 print('foi!')
 
-txt = "# X Y\n"
-for pa in pontosDeG:
-    txt += f"{pa[0]} {pa[1]}\n"
-for pa in pontosDeF:
-    txt += f"{pa[0]} {pa[1]}\n"
-c = open('dados.txt', 'w')
-c.write(txt)
-c.close()
 
-w = open('retangulos.txt', 'w')
-txt = ""
-iterador = 1
-for linha in p:
-    for pix in linha:
-        txt += f"set object {iterador} rect from {pix[0]-t/2},{pix[1]-t/2} to {pix[0]+t/2},{pix[1]+t/2}\n"
-        iterador += 1
-txt += f"replot {f[0]}*x+{f[1]}\nreplot {g[0]}*x+{g[1]}"
-w.write(txt)
-w.close()
+# isso passa as coordenadas para serem plotadas no gnu
+def plotNoGnu():
+    txt = "# X Y\n"
+    for pa in pontosDeG:
+        txt += f"{pa[0]} {pa[1]}\n"
+    for pa in pontosDeF:
+        txt += f"{pa[0]} {pa[1]}\n"
+    c = open('./a/dados.txt', 'w')
+    c.write(txt)
+    c.close()
+
+    w = open('./a/retangulos.txt', 'w')
+    txt = ""
+    iterador = 1
+    for linha in p:
+        for pix in linha:
+            txt += f"set object {iterador} rect from {pix[0]-t/2},{pix[1]-t/2} to {pix[0]+t/2},{pix[1]+t/2}\n"
+            iterador += 1
+    txt += f"replot {f[0]}*x+{f[1]}\nreplot {g[0]}*x+{g[1]}"
+    w.write(txt)
+    w.close()
+plotNoGnu()
+
