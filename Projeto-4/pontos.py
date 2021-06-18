@@ -104,6 +104,7 @@ def ver(f, t, p):
     if (p[1] - t/2 <= y0n <= p[1] + t/2) and len(pontos) < 2 and [round((y0n-b)/a, 5), round(y0n, 5)] not in pontos:
         # print('4')
         pontos.append([round((y0n-b)/a, 5), round(y0n, 5)])
+
     return pontos
 
 # calcula quais pixels são atravessados por um determinado feixe f, dado a grade de possíveis p, a quantidade n e o tamanho t dos pixels
@@ -118,10 +119,12 @@ def estaNoPontoP(f, p, n, t):
     for linha in P:
         if f[0] > 0:
             [p0, p1] = maximoY(linha[0][0]-t/2, t, f)
-        else:
-            [p0, p1] = ver(f, t, linha[0])            
-
+             
         for p in linha: 
+            if f[0] < 0:
+                try: ver(f, t, p)[0]
+                except: [p0, p1] = [[-10,-10],[-10,-10]]
+                else: [p0, p1] = ver(f, t, p)           
             if p0[0]-t/2 <= p[0] <= p1[0]+t/2 and p0[1]-t/2 <= p[1] <= p1[1]+t/2 and p not in listaPossiveis: 
                 listaPossiveis.append(p)
           
@@ -320,21 +323,17 @@ def plotNoGnu(dados, p, t, funcoes):
     arqRetangulos.write(txt)
     arqRetangulos.close()
 
-def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t, p, salvarGNU):
+def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t, p):
 
     # se for maior que t*sqrt(2), utilizar iterações
     # caso em que o tamanho do feixe não supera t*sqrt(2)
     [a, b] = funcaoInicial
     f = [a, b+(tamanhoFeixe/2)*(a*a+1)**0.5]
     g = [a, b-(tamanhoFeixe/2)*(a*a+1)**0.5]
-
+    print(f, g)
     # captura os pixels os quais as retas passam
     pontosDeF = estaNoPontoP(f, p, n, t)
     pontosDeG = estaNoPontoP(g, p, n, t)
-
-    # se quiser salvar no formato GNU
-    if salvarGNU:
-        plotNoGnu(pontosDeF + pontosDeG, p, t, [f, g])
 
     # onde os dados serão guardados
     dados = []
@@ -371,8 +370,10 @@ def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t, p, salvarGNU):
             pix, # pixel calculado
             porc # porcentagem
         ])
+
+    informacoesGNU = [pontosDeF+pontosDeG, [f, g]]
     
-    return dados
+    return [dados, informacoesGNU]
 
 def armazenarEmTxt(dados, arquivo):
     txt = ""
@@ -384,16 +385,28 @@ def armazenarEmTxt(dados, arquivo):
     arq.write(txt)
     arq.close()
 
-feixe = [.01, 5.12] # equação do feixe
+feixe = [1.57, 3.12] # equação do feixe
 n = 16 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 p = pontos(n, t) # pixels da tela
+tamanhoFeixe = 1.0744461230854325 # tamanho do feixe
 
-tamanhoFeixe = 1.0744461230854325
+# simulações
+dados1 = simularParaFeixe(feixe, tamanhoFeixe, n, t, p)
+dados2 = simularParaFeixe([-1.57, 15.75], tamanhoFeixe, n, t, p)
+dados3 = simularParaFeixe([-1.57, 26.75], tamanhoFeixe, n, t, p)
 
-armazenarEmTxt(simularParaFeixe(feixe, tamanhoFeixe, n, t, p, True), './a/a.txt')
-
+# dados das simulações
+dados1Simulacao = dados1[0]
+dados2Simulacao = dados2[0]
+dados3Simulacao = dados3[0]
+# informações para o GNUplot
+gnu1 = dados1[1]
+gnu2 = dados2[1]
+gnu3 = dados3[1]
+# armazena em txt
+armazenarEmTxt(dados1Simulacao+dados2Simulacao+dados3Simulacao, './a/a.txt')
+# armazena nos txt para o GNU
+plotNoGnu(gnu1[0]+gnu2[0]+gnu3[0], p, t, gnu1[1]+gnu2[1]+gnu3[1])
 
 print('foi!')
-
-
