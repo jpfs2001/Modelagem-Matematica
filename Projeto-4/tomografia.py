@@ -42,7 +42,19 @@ class Tomografia:
                 if(i == (len(a)-1)):
                     x0 = x[i]
 
-        return x    
+
+        # Transformando em uma fração e retornando o resultado x onde k = 12 e p = 50
+        tamanho = len(x)-1
+
+        x = x[tamanho]
+        
+        max = np.matrix.max(x)
+        
+        for i in range(len(x)):
+            x[i] = x[i]/max
+
+        return x
+
 
 
 
