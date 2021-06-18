@@ -466,10 +466,11 @@ class Metodos:
 percentualValor = 1
 
 ### VALORES DE ENTRADA ###
-feixe = [-1.57, 26.12] # equação do feixe
-n = 16 # tamanho da tela n x n
+feixe = [1, 0] # equação do feixe
+n = 3 # tamanho da tela n x n
 t = 2 # tamanho do pixel
-tamanhoFeixe = 1.0744461230854325 # tamanho do feixe
+tamanhoFeixe = 2 # tamanho do feixe
+
 
 ### INSTANCIAMENTO ###
 ferr = Ferramentas(t, n, 1)

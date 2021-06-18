@@ -1,116 +1,28 @@
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [1, 23]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [1, 25]
+Funcao(oes): [[1, 1.4142135623730951], [1, -1.4142135623730951]]
+Pixel: [1, 1]
 Coeficiente: 1
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [1, 27]
+Funcao(oes): [[1, 1.4142135623730951], [1, -1.4142135623730951]]
+Pixel: [1, 3]
 Coeficiente: 0
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [3, 21]
+Funcao(oes): [[1, 1.4142135623730951], [1, -1.4142135623730951]]
+Pixel: [3, 3]
 Coeficiente: 1
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [3, 23]
+Funcao(oes): [[1, 1.4142135623730951], [1, -1.4142135623730951]]
+Pixel: [3, 5]
 Coeficiente: 0
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [5, 17]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [5, 19]
+Funcao(oes): [[1, 1.4142135623730951], [1, -1.4142135623730951]]
+Pixel: [5, 5]
 Coeficiente: 1
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [5, 21]
+Funcao(oes): [[1, -1.4142135623730951]]
+Pixel: [3, 1]
 Coeficiente: 0
 
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [7, 15]
-Coeficiente: 1
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [7, 17]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [9, 11]
-Coeficiente: 1
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [9, 13]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [9, 15]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [11, 9]
-Coeficiente: 1
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [11, 11]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [13, 5]
-Coeficiente: 1
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [13, 7]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [13, 9]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [15, 3]
-Coeficiente: 1
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [15, 5]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 27.12], [-1.57, 25.12]]
-Pixel: [17, 1]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [1, 21]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [3, 19]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [5, 15]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [7, 13]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [9, 9]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [11, 7]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [13, 3]
-Coeficiente: 0
-
-Funcao(oes): [[-1.57, 25.12]]
-Pixel: [15, 1]
+Funcao(oes): [[1, -1.4142135623730951]]
+Pixel: [5, 3]
 Coeficiente: 0
 

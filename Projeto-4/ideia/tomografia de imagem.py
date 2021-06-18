@@ -2,8 +2,10 @@ from PIL import Image
 from numpy import asarray
 import matplotlib.pyplot as plt
 
+
+
 # bota a imagem aí
-image = Image.open('787943.jpg')
+image = Image.open('./ideia/1234.png')
 
 # converte para array
 data = asarray(image)
