@@ -254,5 +254,6 @@ set object 253 rect from 30.0,24.0 to 32.0,26.0
 set object 254 rect from 30.0,26.0 to 32.0,28.0
 set object 255 rect from 30.0,28.0 to 32.0,30.0
 set object 256 rect from 30.0,30.0 to 32.0,32.0
-plot -1.57*x+26.12
+plot -1.57*x+27.12
+replot -1.57*x+25.12
 replot "dados.txt"

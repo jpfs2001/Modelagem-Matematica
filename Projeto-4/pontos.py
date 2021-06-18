@@ -60,7 +60,7 @@ class Ferramentas:
         a = []
         for i in range(1, 2*self.n, 2):
             for j in range(1, 2*self.n, 2):
-                if (min[0] <= i <= max[0] or min[0] >= i >= max[0]) and (min[1] <= j <= max[1] or min[1] >= j >= max[1]):
+                if (min[0] <= i-t/2 <= max[0] or min[0] >= i-t/2 >= max[0] or min[0] <= i+t/2 <= max[0] or min[0] >= i+t/2 >= max[0]) and (min[1] <= j-t/2 <= max[1] or min[1] >= j-t/2 >= max[1] or min[1] <= j+t/2 <= max[1] or min[1] >= j+t/2 >= max[1]):
                     try:
                         a[i].append([i, j])
                     except:
@@ -115,7 +115,6 @@ class Ferramentas:
         
         # lista onde serão armazenados os pixels atravessados
         listaPossiveis = []
-
         for linha in P:
             # variável que determina se deve-se verificar a condição do ponto ou não
             # a necessidade dela surge quando se tem coeficiente angular negativo, já que alguns pontos que estão no intervalo não são atravessados, embora outros da mesma linha sejam
@@ -352,7 +351,7 @@ class Metodos:
         self.n = n
         self.t = t
           
-    # falta arrumar altura
+    # método do centro, onde o centro do pixel está contido no intervalo entre f e g
     def metodoCentro(self, funcaoInicial):
         [a, b] = funcaoInicial
         f = [a, b+(self.tamanhoFeixe/2)*(a*a+1)**0.5]
@@ -362,28 +361,51 @@ class Metodos:
         pontosDeG = self.Ferr.estaNoPontoP(g)
         dados = []
 
-        for p in pontosDeF:
-            verF = self.Ferr.ver(f, p)
-            Ge = True
-            if p in pontosDeG:
-                verG = self.Ferr.ver(g, p)
-                if not verG[0][0] <= p[0] <= verG[1][0] or not verG[0][1] <= p[1] <= verG[1][1]:
-                    Ge = False
-            if verF[0][0] <= p[0] <= verF[1][0] and verF[0][1] <= p[1] <= verF[1][1] and Ge:
-                dados.append([funcaoInicial, p, 1])
+        for p in pontosDeF+pontosDeG:
+            # verifica quem passou nesse ponto
+            if p in pontosDeF and pontosDeG: funcoesConsideradas = [f, g]
+            elif p in pontosDeF: funcoesConsideradas = [f]
+            else: funcoesConsideradas = [g]
+
+            # ordena os pontos para saber quem está no meio, tanto em x quanto em y
+            listY = [f[0]*p[0]+f[1], p[1], g[0]*p[0]+g[1]] # axp+bf, yp, axp+bg
+            listY.sort()
+            listX = [p[1]-f[1], p[0]*f[0], p[1]-g[1]] # yp-bf, xp*a, yp-bg
+            listX.sort()
+            # se o ponto central do pixel não estiver entre F e G, a = 0
+            if listX[1]!=p[0] and listY[1]!=p[1]: valor = 0
+            # se estiver, a = 1
+            else: valor = 1
+
+            # se o ponto não estiver na lista já adicionado anteriormente
+            if [funcoesConsideradas, p, valor] not in dados:
+                dados.append([funcoesConsideradas, p, valor])
+
+        return [dados, [pontosDeF+pontosDeG, [f, g]]]
+        
+    # método onde a reta central atravessa um determinado pixel e a = (comprimento da reta que atravessou o pixel)/(t)
+    def metodoRetaCentral(self, funcaoInicial):
+        pontosFuncao = self.Ferr.estaNoPontoP(funcaoInicial)
+        dados = []
+        for p in pontosFuncao:
+            pts = self.Ferr.ver(funcaoInicial, p)
+            # se atravessar o vértice de um pixel
+            if len(pts) == 1:
+                dist = 0
             else:
-                dados.append([funcaoInicial, p, 0])
-        for p in pontosDeG:
-            if p not in pontosDeF:
-                verF = self.Ferr.ver(f, p)
-                verG = self.Ferr.ver(g, p)
-                if (verG[0][0] <= p[0] <= verG[1][0] and verG[0][1] <= p[1] <= verG[1][1]):
-                    dados.append([funcaoInicial, p, 1])
-                else:
-                    dados.append([funcaoInicial, p, 0])
-        return [dados, pontosDeF+pontosDeG]
-   
-    def simularParaFeixe(self, funcaoInicial):
+                dist = self.Ferr.distanciaEntrePontos(pts[0], pts[1])
+        
+            dados.append([
+                [funcaoInicial], # função que atravessou o pixel
+                p, # pixel atravessado
+                dist/self.t
+            ])
+
+        return [dados, [pontosFuncao, [funcaoInicial]]]
+
+    # método da área, onde o pixel atravessado por alguma parte do feixe tem a = (área atravessada)/(área atravessada por um feixe horizontal)
+    # para não ter o trabalho de simular, já que o pixel é necessariamente um quadrado (pelo menos nesse caso), considerei essa área como t*tamanhoFeixe, já que é um retângulo de lados t e tamanhoFeixe
+    def metodoArea(self, funcaoInicial):
 
         # se for maior que t*sqrt(2), utilizar iterações
         # caso em que o tamanho do feixe não supera t*sqrt(2)
@@ -433,18 +455,7 @@ class Metodos:
         informacoesGNU = [pontosDeF+pontosDeG, [f, g]]
         
         return [dados, informacoesGNU]
-  
-    def metodoRetaCentral(self, funcaoInicial):
-        pontosFuncao = self.Ferr.estaNoPontoP(funcaoInicial, n)
-        dados = []
-        for p in pontosFuncao:
-            pts = self.Ferr.ver(funcaoInicial, p)
-            dist = self.Ferr.distanciaEntrePontos(pts[0], pts[1])
-            dados.append(dist/self.t)
-            print(dados[-1])
-
-        return [dados, pontosFuncao]
-
+ 
 
 
 
@@ -468,7 +479,7 @@ salvar = Salvar()
 ### CHAMAMENTO ###
 d = met.metodoCentro(feixe)
 salvar.armazenarEmTxt(d[0], './a/a.txt')
-salvar.plotNoGnu(d[1], ferr.pontos(), t, [feixe])
+salvar.plotNoGnu(d[1][0], ferr.pontos(), t, d[1][1])
 
 # d = met.simularParaFeixe(feixe)
 # salvar.armazenarEmTxt(d[0], './a/a.txt')
