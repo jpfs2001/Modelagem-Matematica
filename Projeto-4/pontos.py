@@ -52,8 +52,6 @@ def maximo(n, t, f):
         elif 0 <= n*t/a - b/a <= n*t:
             return [(n*t-b)/a, n*t]
 
-
-
 # captura os pontos em determinado intervalo
 def intervalo(n, min, max):
     a = []
@@ -84,7 +82,7 @@ def maximoY(i, t, f):
 		x1 = i+t
 	return [[x0, y0], [x1, y1]]
 
-# verifica em quais pontos de determinado pixel a reta passou
+# verifica em quais pontos de determinado pixel p de lado t a reta f passou
 def ver(f, t, p):
     [a, b] = f
     x0m = (p[1]+t/2-b)/a
@@ -108,38 +106,44 @@ def ver(f, t, p):
     return pontos
 
 # calcula quais pixels são atravessados por um determinado feixe f, dado a grade de possíveis p, a quantidade n e o tamanho t dos pixels
-def estaNoPontoP(f, p, n, t):
+def estaNoPontoP(f, n, t):
 
+    # verifica se a reta é crescente ou decrescente
     if f[0] > 0:
         P = intervalo(n, minimo(f, n, t), maximo(n, t, f))
     else:
         P = intervalo(n, maximo(n, t, f), minimo(f, n, t))
-        
+    
+    # lista onde serão armazenados os pixels atravessados
     listaPossiveis = []
+
     for linha in P:
+        # variável que determina se deve-se verificar a condição do ponto ou não
+        # a necessidade dela surge quando se tem coeficiente angular negativo, já que alguns pontos que estão no intervalo não são atravessados, embora outros da mesma linha sejam
+        k = False
+        # se o coeficiente angular for positivo, chama a função maximoY
         if f[0] > 0:
             [p0, p1] = maximoY(linha[0][0]-t/2, t, f)
+            k = True
              
         for p in linha: 
+            # se for negativo, chama a função ver
             if f[0] < 0:
                 try: ver(f, t, p)[0]
-                except: [p0, p1] = [[-10,-10],[-10,-10]]
-                else: [p0, p1] = ver(f, t, p)           
-            if p0[0]-t/2 <= p[0] <= p1[0]+t/2 and p0[1]-t/2 <= p[1] <= p1[1]+t/2 and p not in listaPossiveis: 
+                # se por algum motivo o ponto não tiver
+                except: pass
+                else: 
+                    [p0, p1] = ver(f, t, p)           
+                    k = True
+            # verifica se o ponto é atravessado
+            if k and p0[0]-t/2 <= p[0] <= p1[0]+t/2 and p0[1]-t/2 <= p[1] <= p1[1]+t/2 and p not in listaPossiveis: 
                 listaPossiveis.append(p)
           
     return listaPossiveis
 
-def lado(f, g):
-    # se f estiver à esquerda, sua raiz deve ser menor que a raiz de g
-    if -f[1]/f[0] < -g[1]/g[0]:
-        return 0
-    # se g estiver à esquerda, vale a mesma coisa
-    elif -g[1]/g[0] < -f[1]/f[0]:
-        return 1
-
 # calcula distancia entre um ponto qualquer e uma reta
 def distanciaPontoReta(ponto, f):
+    # abs(ax+by+c)/sqrt(a^2+b^2)
     a = -f[0]
     b = 1
     c = -f[1]
@@ -149,6 +153,7 @@ def distanciaPontoReta(ponto, f):
 
 # calcula a distância entre duas retas quaisquer
 def distanciaEntreRetas(f, g):
+    # abs(c'-c)/sqrt(a^2+b^2)
     a = -f[0]
     b = 1
     cf = -f[1]
@@ -157,43 +162,56 @@ def distanciaEntreRetas(f, g):
 
 # calcula a distância entre dois pontos quaisquer
 def distanciaEntrePontos(p1, p2):
+    # sqrt((xb-xa)^2+(yb-ya)^2)
+
     y = (p1[1]-p2[1])**2
     x = (p1[0]-p2[0])**2
     return round((x+y)**0.5, 5)
 
 # determina vértices do pixel que estão mais próximos da outra reta que da reta dita
 def verticesProximos(f, g, p, t):
+    # calcula a distância entre as retas
     distanciaFG = distanciaEntreRetas(f, g)
+    # array onde serão armazenados os pontos próximos da segunda função
     pontosProximos = []
+    # vértices do pixel
     vertices = [[p[0]-t/2, p[1]+t/2], [p[0]+t/2, p[1]+t/2], [p[0]-t/2, p[1]-t/2], [p[0]+t/2, p[1]-t/2]]
     
+    # se houver algum vértice que seja atravessado pela segunda função
     try:
         vertices.index([p[0], round(g[0]*p[0]+g[1], 5)])
     except:
+        # se não houver, verifica para cada vértice
         for vert in vertices:
+            # se a distância entre a segunda função e o vértice for menor que a distância entre as retas ou a distância entre a segunda função e o vértice for menor que a distância entre o vértice e a primeira
             if distanciaPontoReta(vert, g) < distanciaFG or distanciaPontoReta(vert, g) < distanciaPontoReta(vert, f): 
                 pontosProximos.append(vert)
     else:
+        # se houver, os outros são adicionados
         vertices.remove([p[0], f[0]*p[0]+f[1]])
         pontosProximos = vertices.copy()
     
     return pontosProximos
 
 # verifica qual seção de área deve ser considerada
+# é uma função mais "organizativa" que qualquer coisa, não tem muita serventia prática
 def qualArea(f, g, p, t):
+    # calcula os pontos próximos
     pontosProximos = verticesProximos(f, g, p, t)
 
     # se for true, f está à esquerda. Se for false, f está à direita
     posicao = -f[1]/f[0] < -g[1]/g[0]
 
+    # se tiver comprimento 1, podem ser dois casos:
     if len(pontosProximos) == 1:
+        # caso em que não se passa pelo pixel
         if (pontosProximos[0] == [p[0]-t/2, p[1]-t/2] and posicao) or (pontosProximos[0] == [p[0]-t/2, p[1]+t/2] and posicao) or (pontosProximos[0] == [p[0]+t/2, p[1]-t/2] and not posicao) or (pontosProximos[0] == [p[0]+t/2, p[1]+t/2] and not posicao):
             return 0
         else:
-            # se for 1 ponto apenas, significa que é situação de triângulo, e consequentemente a menor área
+            # situação de triângulo, e consequentemente a menor área
             return pontosProximos
     
-    # se forem 2 pontos, é necessário retornar quais são eles
+    # se forem 2 pontos, é necessário retornar quais são eles, pois será um trapézio
     if len(pontosProximos) == 2:
         return pontosProximos
 
@@ -215,6 +233,7 @@ def porcentagem(f, g, t, p):
     # verifica qual área deve ser calculada
     qual = qualArea(f, g, p, t)
 
+    # se for algum dos valores extremos excepcionais
     if qual == t*t:
         return percentualValor
     elif qual == 0:
@@ -271,12 +290,11 @@ def porcentagem(f, g, t, p):
                 else: pontoFaltante[1] = p[1]+t/2
 
                 l3 = [pontoFaltante[0], pontoFaltante[1], 1]
-                # areaDeBase = abs(m.determinanteLU([l1, l2, l3])/2)
                 areaDeBase = abs(np.linalg.det([l1, l2, l3])/2)
                 
-
                 return percentualValor*(t*t-areaDeBase)/(t*t)
         else: 
+            # no caso de se haver somente um ponto, é calculado o triângulo formado para a outra função
             ptsG = ver(g, t, p)
             l1 = [ptsG[0][0], ptsG[0][1], 1]
             l2 = [ptsG[1][0], ptsG[1][1], 1]
@@ -286,13 +304,17 @@ def porcentagem(f, g, t, p):
 
 # calcula a área do compreendida quando as duas retas passam sobre o mesmo pixel juntas
 def retasSobreMesmoPixel(f, g, p, t):
+    # valor percentual
     percentualValor = 1
 
+    # calcula os valores separadamente e remove o total, de modo que o restante é a intersecção entre ambos
     areaDeInterseccao = porcentagem(f, g, t, p) + porcentagem(g, f, t, p) - percentualValor
     return areaDeInterseccao
 
 # isso passa as coordenadas para um txt no formato do GNUplot
+# não é essencial, só serve para visualizar algumas coisas
 def plotNoGnu(dados, p, t, funcoes):
+    # plota os pontos atravessados
     txt = "# X Y\n"
     for pa in dados:
         txt += f"{pa[0]} {pa[1]}\n"
@@ -308,6 +330,7 @@ def plotNoGnu(dados, p, t, funcoes):
         for pix in linha:
             txt += f"set object {iterador} rect from {pix[0]-t/2},{pix[1]-t/2} to {pix[0]+t/2},{pix[1]+t/2}\n"
             iterador += 1
+    
     # plota as funções
     for i in range(len(funcoes)):
         funcao = funcoes[i]
@@ -323,17 +346,16 @@ def plotNoGnu(dados, p, t, funcoes):
     arqRetangulos.write(txt)
     arqRetangulos.close()
 
-def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t, p):
+def simularParaFeixe(funcaoInicial, tamanhoFeixe, n, t):
 
     # se for maior que t*sqrt(2), utilizar iterações
     # caso em que o tamanho do feixe não supera t*sqrt(2)
     [a, b] = funcaoInicial
     f = [a, b+(tamanhoFeixe/2)*(a*a+1)**0.5]
     g = [a, b-(tamanhoFeixe/2)*(a*a+1)**0.5]
-    print(f, g)
     # captura os pixels os quais as retas passam
-    pontosDeF = estaNoPontoP(f, p, n, t)
-    pontosDeG = estaNoPontoP(g, p, n, t)
+    pontosDeF = estaNoPontoP(f, n, t)
+    pontosDeG = estaNoPontoP(g, n, t)
 
     # onde os dados serão guardados
     dados = []
@@ -385,16 +407,18 @@ def armazenarEmTxt(dados, arquivo):
     arq.write(txt)
     arq.close()
 
+############################ ENTRADA ##################################
 feixe = [1.57, 3.12] # equação do feixe
 n = 16 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 p = pontos(n, t) # pixels da tela
 tamanhoFeixe = 1.0744461230854325 # tamanho do feixe
 
+################### ALGUMAS SIMULAÇÕES DE TESTE #######################
 # simulações
-dados1 = simularParaFeixe(feixe, tamanhoFeixe, n, t, p)
-dados2 = simularParaFeixe([-1.57, 15.75], tamanhoFeixe, n, t, p)
-dados3 = simularParaFeixe([-1.57, 26.75], tamanhoFeixe, n, t, p)
+dados1 = simularParaFeixe(feixe, tamanhoFeixe, n, t)
+dados2 = simularParaFeixe([-1.57, 15.75], tamanhoFeixe, n, t)
+dados3 = simularParaFeixe([-1.57, 26.75], tamanhoFeixe, n, t)
 
 # dados das simulações
 dados1Simulacao = dados1[0]
