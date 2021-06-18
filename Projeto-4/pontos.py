@@ -55,16 +55,16 @@ def maximo(n, t, f):
 
 
 # captura os pontos em determinado intervalo
-def intervalo(n, P, min, max):
+def intervalo(n, min, max):
     a = []
-    for i in range(n):
-        for j in range(n):
-            if (min[0] <= i+1 <= max[0] or min[0] >= i+1 >= max[0]) and (min[1] <= j+1 <= max[1] or min[1] >= j+1 >= max[1]):
+    for i in range(1, 2*n, 2):
+        for j in range(1, 2*n, 2):
+            if (min[0] <= i <= max[0] or min[0] >= i >= max[0]) and (min[1] <= j <= max[1] or min[1] >= j >= max[1]):
                 try:
-                    a[i].append(P[i][j])
+                    a[i].append([i, j])
                 except:
                     a.append([])
-                    a[-1].append(P[i][j])
+                    a[-1].append([i, j])
     return a
 
 # calcula os pontos de intersecção da reta com o pixel dado um valor inicial, o tamanho do pixel e a função
@@ -110,9 +110,9 @@ def ver(f, t, p):
 def estaNoPontoP(f, p, n, t):
 
     if f[0] > 0:
-        P = intervalo(n, p, minimo(f, n, t), maximo(n, t, f))
+        P = intervalo(n, minimo(f, n, t), maximo(n, t, f))
     else:
-        P = intervalo(n, p, maximo(n, t, f), minimo(f, n, t))
+        P = intervalo(n, maximo(n, t, f), minimo(f, n, t))
         
     listaPossiveis = []
     for linha in P:
@@ -312,6 +312,10 @@ def plotNoGnu(dados, p, t, funcoes):
         if i >= 1:
             re = "re"
         txt += f"{re}plot {funcao[0]}*x+{funcao[1]}\n"
+
+    # plota os dados.txt
+    txt += f'replot "dados.txt"'
+
     # salva
     arqRetangulos.write(txt)
     arqRetangulos.close()
@@ -380,7 +384,7 @@ def armazenarEmTxt(dados, arquivo):
     arq.write(txt)
     arq.close()
 
-feixe = [1.57, -1.12] # equação do feixe
+feixe = [.01, 5.12] # equação do feixe
 n = 16 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 p = pontos(n, t) # pixels da tela
