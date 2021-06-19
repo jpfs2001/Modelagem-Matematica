@@ -19,22 +19,11 @@ retas = [[0.000001, 1], [0.0000001, 3], [0.000001, 5], [1, -3], [1, 0], [1, 3], 
 a = []
 
 
-
-import matplotlib.pyplot as plt
-def exibir(matriz):
-    # plota usando a escala de cinza
-    plt.imshow(matriz, aspect='auto', cmap="Greys")
-    plt.axis('off')
-    plt.show()
-    
-ç = int(input("Escolha o método desejado para cálculo \n 1 - método do centro do pixel \n 2 - método da reta central \n 3 - método da área \n Digite a opção correspondente: "))    
 for r in retas:
-    if ç == 1:
-        dados = met.metodoCentro(r)
-    elif ç == 2:
-        dados = met.metodoRetaCentral(r)
-    elif ç == 3:
-        dados = met.metodoArea(r)
+    # centro ok
+    # reta ok
+    # área nada ok
+    dados = met.metodoRetaCentral(r)
 
     matrizTeste = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     for dado in dados[0]:
@@ -49,6 +38,12 @@ for r in retas:
 
     a.append(matrizConvertida)
     
+
+# for i in a:
+#     print('a: ', i)
+
+
+
 b = np.array([
     13,
     15,
@@ -74,9 +69,12 @@ for i in range(0, len(x)):
     if (i+1)%3==0:
         matrizResultante.append(linha)
         linha = []
+
+
+import matplotlib.pyplot as plt
+def exibir(matriz):
+    # plota usando a escala de cinza
+    plt.imshow(matriz, aspect='auto', cmap="Greys")
+    plt.axis('off')
+    plt.show()
 exibir(matrizResultante)
-# for m in matrizResultante:
-#     print(m)
-
-
-#########################################################################
