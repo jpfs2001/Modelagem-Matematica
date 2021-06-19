@@ -15,11 +15,14 @@ tamanhoFeixe = 2 # tamanho do feixe
 # ### INSTANCIAMENTO ###
 ferr = Ferramentas(t, n, percentualValor)
 met = Metodos(tamanhoFeixe, n, t, ferr)
-retas = [[0.000001, 1], [0.0000001, 3], [0.000001, 5], [1, -3], [1, 0], [1, 3], [1000, -5000], [1000, -3000], [1000, -1000], [-1, 9], [-1, 6], [-1, 3]]
+retas = [[0.000001, 1], [0.0000001, 3], [0.000001, 5], [1, -3], [1, 0], [1, 3], [100000, -500000], [100000, -300000], [100000, -100000], [-1, 9], [-1, 6], [-1, 3]]
 a = []
 
 for r in retas:
-    dados = met.metodoCentro(r)
+    # centro ok
+    # reta ok
+    # área nada ok
+    dados = met.metodoArea(r)
 
     matrizTeste = [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
     for dado in dados[0]:
@@ -34,31 +37,11 @@ for r in retas:
 
     a.append(matrizConvertida)
     
-# a = np.array([
-#     [[0], [0], [0], [0], [0], [0], [1], [1], [1]],
-#     [[0], [0], [0], [1], [1], [1], [0], [0], [0]],
-#     [[1], [1], [1], [0], [0], [0], [0], [0], [0]],
-#     [[0], [0], [0], [0], [0], [1], [0], [1], [1]],
-#     [[0], [0], [1], [0], [1], [0], [1], [0], [0]],
-#     [[1], [1], [0], [1], [0], [0], [0], [0], [0]],
-#     [[0], [0], [1], [0], [0], [1], [0], [0], [1]],
-#     [[0], [1], [0], [0], [1], [0], [0], [1], [0]],
-#     [[1], [0], [0], [1], [0], [0], [1], [0], [0]],
-#     [[0], [1], [1], [0], [0], [1], [0], [0], [0]],
-#     [[1], [0], [0], [0], [1], [0], [0], [0], [1]],
-#     [[0], [0], [0], [1], [0], [0], [1], [1], [0]]
-# ])
 
-
-
-# for i in range(len(a)):
-#     a[i] = np.asmatrix(a[i])
 # for i in a:
 #     print('a: ', i)
 
-# print(a)
-# i = (x-t/2)/t
-# j = (nt-y-t/2)/t
+
 
 b = np.array([
     13,
@@ -77,3 +60,12 @@ b = np.array([
 
 x = tomografia.densidade(a, b)
 print(x)
+
+matrizResultante = []
+for i in range(0, round(len(x)**0.5)+1):
+    linha = []
+    for j in range(0, round())
+    matrizResultante.append(linha)
+
+for m in matrizResultante:
+    print(m)

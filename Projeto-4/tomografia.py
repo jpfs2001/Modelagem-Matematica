@@ -18,7 +18,7 @@ class Tomografia:
         
         x = [] 
 
-        for k in range(50): # Estrutura de repetição para aumentar a precisão dos resultados
+        for k in range(1): # Estrutura de repetição para aumentar a precisão dos resultados
 
             x.clear() # Limpa a lista para que somente o ultimo resultado seja salvo
 
@@ -28,12 +28,13 @@ class Tomografia:
                 
                 x0 = np.asmatrix(x0)
                 a[i] = np.matrix(a[i])        
-
+                
                 if(i == 0): # caso esteja na primeira repetição, o algorítmo usará o x0 no lugar do x[i-1]
 
                     if((np.transpose(a[i]) * np.asmatrix(a[i]) ) != 0):
                         aux = x0 + a[i] * ( (b[i]-(np.transpose(a[i]) * x0)) / (np.transpose(a[i]) * np.asmatrix(a[i]) ) )  
                         x.append(aux)
+                        
                     else:
                         x.append(0)
 

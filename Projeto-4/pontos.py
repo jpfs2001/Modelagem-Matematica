@@ -61,7 +61,19 @@ class Ferramentas:
         a = []
         for i in range(1, 2*self.n, 2):
             for j in range(1, 2*self.n, 2):
-                if (min[0] <= i-t/2 <= max[0] or min[0] >= i-t/2 >= max[0] or min[0] <= i+t/2 <= max[0] or min[0] >= i+t/2 >= max[0]) and (min[1] <= j-t/2 <= max[1] or min[1] >= j-t/2 >= max[1] or min[1] <= j+t/2 <= max[1] or min[1] >= j+t/2 >= max[1]):
+                if (
+                    min[0] <= i-t/2 <= max[0] 
+                    or min[0] >= i-t/2 >= max[0] 
+                    or min[0] <= i+t/2 <= max[0] 
+                    or min[0] >= i+t/2 >= max[0]
+                    or min[0] >= i >= max[0]
+                    or min[0] <= i <= max[0]) and (
+                    min[1] <= j-t/2 <= max[1] 
+                    or min[1] >= j-t/2 >= max[1] 
+                    or min[1] <= j+t/2 <= max[1] 
+                    or min[1] >= j+t/2 >= max[1]
+                    or min[1] <= j <= max[1]
+                    or min[1] >= j >= max[1]):
                     try:
                         a[i].append([i, j])
                     except:
@@ -109,11 +121,7 @@ class Ferramentas:
     # calcula quais pixels são atravessados por um determinado feixe f, dado a grade de possíveis p, a quantidade n e o tamanho t dos pixels
     def estaNoPontoP(self, f):
         # verifica se a reta é crescente ou decrescente
-        if f[0] > 0:
-            P = self.intervalo(self.minimo(f), self.maximo(f))
-        else:
-            P = self.intervalo(self.maximo(f), self.minimo(f))
-        
+        P = self.intervalo(self.minimo(f), self.maximo(f))
         # lista onde serão armazenados os pixels atravessados
         listaPossiveis = []
         for linha in P:
@@ -395,6 +403,7 @@ class Metodos:
     def metodoRetaCentral(self, funcaoInicial):
         pontosFuncao = self.Ferr.estaNoPontoP(funcaoInicial)
         dados = []
+        print(f'funcao: {funcaoInicial} / pontos: {pontosFuncao}')
         for p in pontosFuncao:
             pts = self.Ferr.ver(funcaoInicial, p)
             # se atravessar o vértice de um pixel
@@ -474,7 +483,7 @@ class Metodos:
 percentualValor = 1
 
 ### VALORES DE ENTRADA ###
-feixe = [-1, 9] # equação do feixe
+feixe = [1000, -5000] # equação do feixe
 n = 3 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 tamanhoFeixe = 2 # tamanho do feixe

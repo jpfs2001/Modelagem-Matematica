@@ -7,6 +7,6 @@ set object 6 rect from 2.0,4.0 to 4.0,6.0
 set object 7 rect from 4.0,0.0 to 6.0,2.0
 set object 8 rect from 4.0,2.0 to 6.0,4.0
 set object 9 rect from 4.0,4.0 to 6.0,6.0
-plot -1*x+10.414213562373096
-replot -1*x+7.585786437626905
+plot 1000*x+-3999.999500000125
+replot 1000*x+-6000.000499999875
 replot "dados.txt"

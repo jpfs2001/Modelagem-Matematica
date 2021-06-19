@@ -1,24 +1,16 @@
-Funcao(oes): [[-1, 10.414213562373096]]
-Pixel: [5, 5]
-Coeficiente: 0.6856587594874999
+Funcao(oes): [[1000, -3999.999500000125]]
+Pixel: [3, 1]
+Coeficiente: 1
 
-Funcao(oes): [[-1, 7.585786437626905]]
-Pixel: [1, 5]
-Coeficiente: 0.021446240512499992
-
-Funcao(oes): [[-1, 7.585786437626905]]
-Pixel: [3, 3]
-Coeficiente: 0.021446240512500003
-
-Funcao(oes): [[-1, 7.585786437626905]]
-Pixel: [3, 5]
-Coeficiente: 0.6856587594875
-
-Funcao(oes): [[-1, 7.585786437626905]]
+Funcao(oes): [[1000, -3999.999500000125]]
 Pixel: [5, 1]
-Coeficiente: 0.02144624051249999
+Coeficiente: None
 
-Funcao(oes): [[-1, 7.585786437626905]]
+Funcao(oes): [[1000, -3999.999500000125]]
 Pixel: [5, 3]
-Coeficiente: 0.6856587594875
+Coeficiente: 0.9985000000000002
+
+Funcao(oes): [[1000, -3999.999500000125]]
+Pixel: [5, 5]
+Coeficiente: 0.9975
 
