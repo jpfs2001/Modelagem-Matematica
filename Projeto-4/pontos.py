@@ -8,6 +8,7 @@ class Ferramentas:
         self.percentualValor = percentualValor
         self.t = t
         self.n = n
+        self.tamanhoFeixe = tamanhoFeixe
     # pixels, dada uma quantidade e um intervalo
     def pontos(self):
         P = [0]*self.n
@@ -226,13 +227,13 @@ class Ferramentas:
         qual = self.qualArea(f, g, p)
 
         # se for algum dos valores extremos excepcionais
-        if qual == self.t**0.5:
+        if qual == self.t**0.5 or qual == self.t**2:
             return self.percentualValor
         elif qual == 0:
             return 0
-        
+        # print(f'problema está aqui: {pts} / {qual}')
         # atravessa horizontalmente
-        if len(pts) > 1 and len(qual) > 1 and ((pts[0][0] == p[0]-self.t/2 and pts[1][0] == p[0]+self.t/2) or (pts[1][0] == p[0]-self.t/2 and pts[0][0] == p[0]+self.t/2)):
+        if len(pts) > 1 and len(qual) > 1 and ((pts[0][0] == p[0]-self.t/2 and pts[1][0] == p[0]+self.t/2) or (pts[1][0] == p[0]-self.t/2 and pts[0][0] == p[0]+self.t/2)):            
             if pts[0][1] == qual[0][1]:
                 dif = abs(pts[0][1]-qual[0][1]) + abs(pts[1][1]-qual[1][1])
             else:
@@ -265,16 +266,17 @@ class Ferramentas:
                 elif len(qual) == 3: # se se quiser o restante        
                     # faz-se necessário verificar qual está faltando
                     # usei o fato de que se algum deles não tem a diagonal na lista, então fica prático
-                    if self.distanciaEntrePontos(qual[0], qual[1]) == self.t*(2**0.5):
+                    if self.distanciaEntrePontos(qual[0], qual[1]) == round(self.t*(2**0.5), 5):
                         # então o que falta é o que faz diagonal com o qual[2]
                         p1 = qual[2]
-                    elif self.distanciaEntrePontos(qual[0], qual[2]) == self.t*(2**0.5):
+                    elif self.distanciaEntrePontos(qual[0], qual[2]) == round(self.t*(2**0.5), 5):
                         # então o que falta é o que faz diagonal com o qual[1]
                         p1 = qual[1]
                     else:
                         # o que falta é o que faz diagonal com o qual[0]
                         p1 = qual[0]
-                    
+                    if p == [1, 1]:
+                        print(f'o p1 é: {p1} / {self.t*(2**0.5)} / {self.distanciaEntrePontos(qual[0], qual[1])}')
                     pontoFaltante = [0, 0]
                     if p1[0] > p[0]: pontoFaltante[0] = p[0]-self.t/2
                     else: pontoFaltante[0] = p[0]+t/2
@@ -283,8 +285,13 @@ class Ferramentas:
 
                     l3 = [pontoFaltante[0], pontoFaltante[1], 1]
                     areaDeBase = abs(np.linalg.det([l1, l2, l3])/2)
+
+                    if p == [1, 1]:
+                        print(f"f: {f} / p: {p} / ponto faltante: {pontoFaltante} / qual: {qual}")
+                        print(f'here: {self.percentualValor*(t*t-areaDeBase)/areaDeComparacao}')
+                        print(f'ta: {l1} / {l2} / {l3} / {abs(np.linalg.det([l1, l2, l3])/2)}\n\n')
                     
-                    return self.percentualValor*((self.t**0.5)-areaDeBase)/areaDeComparacao
+                    return self.percentualValor*(t*t-areaDeBase)/areaDeComparacao
             else: 
                 # no caso de se haver somente um ponto, é calculado o triângulo formado para a outra função
                 ptsG = self.ver(g, p)
@@ -297,6 +304,7 @@ class Ferramentas:
     def retasSobreMesmoPixel(self, f, g, p):
         # calcula os valores separadamente e remove o total, de modo que o restante é a intersecção entre ambos
         areaDeInterseccao = self.porcentagem(f, g, p) + self.porcentagem(g, f, p) - self.percentualValor
+        # print(f"p: {p} / area f: {self.porcentagem(f, g, p)} / area g: {self.porcentagem(g, f, p)}")
         return areaDeInterseccao
 
 class Salvar:
@@ -466,7 +474,7 @@ class Metodos:
 percentualValor = 1
 
 ### VALORES DE ENTRADA ###
-feixe = [1, 0] # equação do feixe
+feixe = [-1, 9] # equação do feixe
 n = 3 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 tamanhoFeixe = 2 # tamanho do feixe
@@ -478,7 +486,7 @@ met = Metodos(tamanhoFeixe, n, t, ferr)
 salvar = Salvar()
 
 ### CHAMAMENTO ###
-d = met.metodoCentro(feixe)
+d = met.metodoArea(feixe)
 salvar.armazenarEmTxt(d[0], './a/a.txt')
 salvar.plotNoGnu(d[1][0], ferr.pontos(), t, d[1][1])
 

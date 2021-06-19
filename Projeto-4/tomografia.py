@@ -27,26 +27,31 @@ class Tomografia:
                 # Conversão das listas para matrizes numpy
                 
                 x0 = np.asmatrix(x0)
-                a[i] = np.matrix(a[i])          
+                a[i] = np.matrix(a[i])        
 
                 if(i == 0): # caso esteja na primeira repetição, o algorítmo usará o x0 no lugar do x[i-1]
 
-                    aux = x0 + a[i] * ( (b[i]-(np.transpose(a[i]) * x0)) / (np.transpose(a[i]) * np.asmatrix(a[i]) ) )  
-                    x.append(aux)
+                    if((np.transpose(a[i]) * np.asmatrix(a[i]) ) != 0):
+                        aux = x0 + a[i] * ( (b[i]-(np.transpose(a[i]) * x0)) / (np.transpose(a[i]) * np.asmatrix(a[i]) ) )  
+                        x.append(aux)
+                    else:
+                        x.append(0)
 
                 else:
+                    if((np.transpose(a[i]) * np.asmatrix(a[i]) ) != 0):
 
-                    aux = x[i-1] + a[i] * ( (b[i]-(np.transpose(a[i]) * x[i-1])) / (np.transpose(a[i]) * np.asmatrix(a[i]) ) )  
-                    x.append(aux)
+                        aux = x[i-1] + a[i] * ( (b[i]-(np.transpose(a[i]) * x[i-1])) / (np.transpose(a[i]) * np.asmatrix(a[i]) ) )  
+                        x.append(aux)
+
+                    else:
+                        x.append(0)
 
                 if(i == (len(a)-1)):
                     x0 = x[i]
 
 
         # Transformando em uma fração e retornando o resultado x onde k = 12 e p = 50
-        tamanho = len(x)-1
-
-        x = x[tamanho]
+        x = x[-1]
         
         max = np.matrix.max(x)
         
