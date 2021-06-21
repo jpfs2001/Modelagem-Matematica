@@ -1,11 +1,10 @@
 import numpy as np
-from numpy.core.fromnumeric import transpose
 from matrizes import Matrizes
 l = Matrizes()
 
 class Tomografia:    
 
-    def densidade(self, a, b):
+    def densidade(self, a, b, converter):
 
         # Cria uma variável x0, que será o ponto inicial.
 
@@ -54,14 +53,9 @@ class Tomografia:
         # Transformando em uma fração e retornando o resultado x onde k = 12 e p = 50
         x = x[-1]
         
-        max = np.matrix.max(x)
-        
-        for i in range(len(x)):
-            x[i] = x[i]/max
+        if converter:
+            max = np.matrix.max(x)
+            for i in range(len(x)):
+                x[i] = x[i]/max
 
         return x
-
-
-
-
-

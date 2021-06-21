@@ -16,6 +16,6 @@ b = np.array([
     3
 ])
 
-x = t.densidade(a, b)
+x = t.densidade(a, b, True)
 
 print(x)

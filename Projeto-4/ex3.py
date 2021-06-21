@@ -41,5 +41,5 @@ b = np.array([
     7.04
 ])
 
-x = t.densidade(a, b)
+x = t.densidade(a, b, True)
 print(x)

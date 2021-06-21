@@ -17,5 +17,5 @@ def exibir(matriz):
     plt.show()
 
 # exemplo de matriz aleatória de tamanho 100x100
-matriz = matrizAleatoria(100)
-exibir(matriz)
+# matriz = matrizAleatoria(100)
+# exibir(matriz)
