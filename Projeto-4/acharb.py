@@ -80,13 +80,16 @@ for i in range(len(b)):
     else:
         print(f'Diagonal decrescente: {b[i]}')
 
+# se quiser calcular as equações...
+# equacoes = met.escreverEquacoes(A, b)
 
-equacoes = met.escreverEquacoes(A, b)
 txt = ""
-for eq in equacoes:
-    txt += f"{eq}\n"
+# for eq in equacoes:
+#     txt += f"{eq}\n"
+for bi in b:
+    txt += f"{bi}\n"
 f = open('b.txt', 'w')
 f.write(txt)
 f.close()
 
-print(f"\n{'*'*30}\nEquações escritas em b.txt")
+print(f"\n{'*'*30}\n Anotado em b.txt")
