@@ -21,7 +21,7 @@ def imagemParaArray(imagem):
             
             soma = 0
             if a != 0:
-                for k in j:
+                for k in range(j):
                     soma += k
                 soma -= a
                 soma /= 765
@@ -33,7 +33,7 @@ def imagemParaArray(imagem):
 # não recomendo que se rode esse programa para um n muito grande
 # considerar n = 512 fará o computador travar depois de alguns minutos
 # considerar n até 128 pode demorar mas roda
-X = imagemParaArray('./ideia/gato512.png')
+X = imagemParaArray('C:/Users/jpfre/Desktop/Modelagem-Matematica/Projeto-4/ideia/gato50.jpg')
 
 # para calcular determinado feixe... primeiro vamos estabelecer os valores de configuração e essas coisas
 ### CONFIGURAÇÕES ###
@@ -41,7 +41,7 @@ percentualValor = 1
 
 ### VALORES DE ENTRADA ###
 feixe = [1, 0] # equação do feixe
-n = 128 # tamanho da tela n x n
+n = 50 # tamanho da tela n x n
 t = 2 # tamanho do pixel
 tamanhoFeixe = 2 # tamanho do feixe
 ferr = Ferramentas(t, n, percentualValor)
@@ -54,7 +54,7 @@ Q = n
 # 1 - Centro
 # 2 - Reta Central
 # 3 - Área
-metodo = 1
+metodo = 3
 
 retas = ferr.retasConformeDirecao(Q, [tamanhoFeixe, 0.00001, 100000])
 
@@ -83,6 +83,14 @@ for i in range(len(b)):
 # se quiser calcular as equações...
 # equacoes = met.escreverEquacoes(A, b)
 
+def retornaB():
+    global b
+    return b
+
+def retornaA():
+    global A
+    return A
+
 txt = ""
 # for eq in equacoes:
 #     txt += f"{eq}\n"
@@ -93,3 +101,6 @@ f.write(txt)
 f.close()
 
 print(f"\n{'*'*30}\n Anotado em b.txt")
+
+
+retornaB()
