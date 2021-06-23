@@ -54,7 +54,7 @@ Q = n
 # 1 - Centro
 # 2 - Reta Central
 # 3 - Área
-metodo = 3
+metodo = 2
 
 retas = ferr.retasConformeDirecao(Q, [tamanhoFeixe, 0.00001, 100000])
 
