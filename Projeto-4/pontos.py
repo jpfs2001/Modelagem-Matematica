@@ -60,7 +60,19 @@ class Ferramentas:
         a = []
         for i in range(1, 2*self.n, 2):
             for j in range(1, 2*self.n, 2):
-                if (min[0] <= i-t/2 <= max[0] or min[0] >= i-t/2 >= max[0] or min[0] <= i+t/2 <= max[0] or min[0] >= i+t/2 >= max[0]) and (min[1] <= j-t/2 <= max[1] or min[1] >= j-t/2 >= max[1] or min[1] <= j+t/2 <= max[1] or min[1] >= j+t/2 >= max[1]):
+                if (
+                    min[0] <= i-self.t/2 <= max[0] 
+                    or min[0] >= i-self.t/2 >= max[0] 
+                    or min[0] <= i+self.t/2 <= max[0] 
+                    or min[0] >= i+self.t/2 >= max[0]
+                    or min[0] >= i >= max[0]
+                    or min[0] <= i <= max[0]) and (
+                    min[1] <= j-self.t/2 <= max[1] 
+                    or min[1] >= j-self.t/2 >= max[1] 
+                    or min[1] <= j+self.t/2 <= max[1] 
+                    or min[1] >= j+self.t/2 >= max[1]
+                    or min[1] <= j <= max[1]
+                    or min[1] >= j >= max[1]):
                     try:
                         a[i].append([i, j])
                     except:
@@ -108,11 +120,7 @@ class Ferramentas:
     # calcula quais pixels são atravessados por um determinado feixe f, dado a grade de possíveis p, a quantidade n e o tamanho t dos pixels
     def estaNoPontoP(self, f):
         # verifica se a reta é crescente ou decrescente
-        if f[0] > 0:
-            P = self.intervalo(self.minimo(f), self.maximo(f))
-        else:
-            P = self.intervalo(self.maximo(f), self.minimo(f))
-        
+        P = self.intervalo(self.minimo(f), self.maximo(f))
         # lista onde serão armazenados os pixels atravessados
         listaPossiveis = []
         for linha in P:
@@ -226,13 +234,15 @@ class Ferramentas:
         qual = self.qualArea(f, g, p)
 
         # se for algum dos valores extremos excepcionais
-        if qual == self.t**0.5:
+        if qual == self.t**0.5 or qual == self.t**2:
             return self.percentualValor
         elif qual == 0:
             return 0
-        
+        # print(f'problema está aqui: {pts} / {qual}')
         # atravessa horizontalmente
-        if len(pts) > 1 and len(qual) > 1 and ((pts[0][0] == p[0]-self.t/2 and pts[1][0] == p[0]+self.t/2) or (pts[1][0] == p[0]-self.t/2 and pts[0][0] == p[0]+self.t/2)):
+        if len(pts) > 1 and len(qual) > 1 and ((pts[0][0] == p[0]-self.t/2 and pts[1][0] == p[0]+self.t/2) or (pts[1][0] == p[0]-self.t/2 and pts[0][0] == p[0]+self.t/2)):         
+            if ((pts[0][0] == p[0]-self.t/2 and pts[1][0] == p[0]+self.t/2) and (pts[1][0] == p[0]-self.t/2 and pts[0][0] == p[0]+self.t/2)):
+                return 1
             if pts[0][1] == qual[0][1]:
                 dif = abs(pts[0][1]-qual[0][1]) + abs(pts[1][1]-qual[1][1])
             else:
@@ -265,26 +275,25 @@ class Ferramentas:
                 elif len(qual) == 3: # se se quiser o restante        
                     # faz-se necessário verificar qual está faltando
                     # usei o fato de que se algum deles não tem a diagonal na lista, então fica prático
-                    if self.distanciaEntrePontos(qual[0], qual[1]) == self.t*(2**0.5):
+                    if self.distanciaEntrePontos(qual[0], qual[1]) == round(self.t*(2**0.5), 5):
                         # então o que falta é o que faz diagonal com o qual[2]
                         p1 = qual[2]
-                    elif self.distanciaEntrePontos(qual[0], qual[2]) == self.t*(2**0.5):
+                    elif self.distanciaEntrePontos(qual[0], qual[2]) == round(self.t*(2**0.5), 5):
                         # então o que falta é o que faz diagonal com o qual[1]
                         p1 = qual[1]
                     else:
                         # o que falta é o que faz diagonal com o qual[0]
                         p1 = qual[0]
-                    
                     pontoFaltante = [0, 0]
                     if p1[0] > p[0]: pontoFaltante[0] = p[0]-self.t/2
-                    else: pontoFaltante[0] = p[0]+t/2
+                    else: pontoFaltante[0] = p[0]+self.t/2
                     if p1[1] > p[1]: pontoFaltante[1] = p[1]-self.t/2
-                    else: pontoFaltante[1] = p[1]+t/2
+                    else: pontoFaltante[1] = p[1]+self.t/2
 
                     l3 = [pontoFaltante[0], pontoFaltante[1], 1]
                     areaDeBase = abs(np.linalg.det([l1, l2, l3])/2)
                     
-                    return self.percentualValor*((self.t**0.5)-areaDeBase)/areaDeComparacao
+                    return self.percentualValor*(self.t*self.t-areaDeBase)/areaDeComparacao
             else: 
                 # no caso de se haver somente um ponto, é calculado o triângulo formado para a outra função
                 ptsG = self.ver(g, p)
@@ -297,7 +306,42 @@ class Ferramentas:
     def retasSobreMesmoPixel(self, f, g, p):
         # calcula os valores separadamente e remove o total, de modo que o restante é a intersecção entre ambos
         areaDeInterseccao = self.porcentagem(f, g, p) + self.porcentagem(g, f, p) - self.percentualValor
+        # print(f"p: {p} / area f: {self.porcentagem(f, g, p)} / area g: {self.porcentagem(g, f, p)}")
         return areaDeInterseccao
+
+    def retasConformeDirecao(self, Q, informacoes):
+        [tFeixe, precisaoXhorizontal, precisaoXvertical] = informacoes
+        
+        # retas horizontais
+        # vai passar uma por linha
+        retasHorizontais = []
+        i = 1
+        while i < Q*tFeixe:
+            retasHorizontais.append([precisaoXhorizontal, round(i, 3)])
+            i+= tFeixe
+        
+        # retas verticais
+        # vai passar uma por coluna
+        retasVerticais = []
+        j = 1
+        while j < Q*tFeixe:
+            retasVerticais.append([precisaoXvertical, -round(j,3)*precisaoXvertical])
+            j+= tFeixe
+
+        # retas diagonais crescentes
+        # vai passar uma central e aí se expandirá conforme o tamanho do feixe
+        retasDiagonaisCrescentes = []
+        # [1, -3], [1, 0], [1, 3]
+        for k in range(0, Q, 1):
+            retasDiagonaisCrescentes.append([1, round((tFeixe+self.t/2)*(k-1),3)])
+
+        # retas diagonais decrescentes
+        # vai passar uma central e aí se expandirá conforme o tamanho do feixe
+        retasDiagonaisDecrescentes = []
+        for k in range(int(self.t/2), Q+1, 1):
+            retasDiagonaisDecrescentes.append([-1, round(k*(tFeixe+self.t/2), 3)])
+
+        return [retasHorizontais, retasDiagonaisCrescentes, retasVerticais, retasDiagonaisDecrescentes]
 
 class Salvar:
     def armazenarEmTxt(self, dados, arquivo):
@@ -456,54 +500,73 @@ class Metodos:
         
         return [dados, informacoesGNU]
  
+    def aConformeRetas(self, metodo, retas):
+        A = []
+        GNU = []
+        for reta in retas:
+            if metodo == 1: dados = self.metodoCentro(reta)
+            elif metodo == 2: dados = self.metodoRetaCentral(reta)
+            elif metodo == 3: dados = self.metodoArea(reta)
+                
+            matrizBase = []
+            for l in range(self.n):
+                lis = []
+                for j in range(self.n):
+                    lis.append(0)
+                matrizBase.append(lis)
 
+            # converte os dados para uma matriz propriamente dita
+            for dado in dados[0]:
+                j = int((dado[1][0]-self.t/2)/self.t)
+                i = int((self.n*self.t-dado[1][1]-self.t/2)/self.t)
+                matrizBase[i][j] = dado[2]
 
+            # conversão da matriz para o formato utilizado
+            matrizConvertida = []
+            for linha in matrizBase:
+                for coluna in linha:
+                    matrizConvertida.append([coluna])
+            A.append(matrizConvertida)
+            GNU.append(dados[1])
+        return [A, GNU]
 
+    def escreverEquacoes(self, A, B):
+        iterador = 0
+        textos = []
+        for linha in A:
+            txt = ""
+            for i in range(len(linha)):
+                if round(linha[i][0], 3) != 0:
+                    txt += f"{round(linha[i][0],3)}*x{i+1}"
+                    if i != len(linha)-1 and round(linha[i+1][0], 3) != 0:
+                        txt += " + "
+                if i == len(linha)-1:
+                    txt += f" = {B[iterador]}"
+            
+            iterador += 1
+            textos.append(txt)
+        return textos
 
 ########################### ENTRADA ##################################
 
 ### CONFIGURAÇÕES ###
-percentualValor = 1
+# percentualValor = 1
 
 ### VALORES DE ENTRADA ###
-feixe = [1, 0] # equação do feixe
-n = 3 # tamanho da tela n x n
-t = 2 # tamanho do pixel
-tamanhoFeixe = 2 # tamanho do feixe
+# feixe = [1000, -5000] # equação do feixe
+# n = 3 # tamanho da tela n x n
+# t = 2 # tamanho do pixel
+# tamanhoFeixe = 2 # tamanho do feixe
 
 
 ### INSTANCIAMENTO ###
-ferr = Ferramentas(t, n, 1)
-met = Metodos(tamanhoFeixe, n, t, ferr)
-salvar = Salvar()
+# ferr = Ferramentas(t, n, 1)
+# met = Metodos(tamanhoFeixe, n, t, ferr)
+# salvar = Salvar()
 
 ### CHAMAMENTO ###
-d = met.metodoCentro(feixe)
-salvar.armazenarEmTxt(d[0], './a/a.txt')
-salvar.plotNoGnu(d[1][0], ferr.pontos(), t, d[1][1])
-
-# d = met.simularParaFeixe(feixe)
+# d = met.metodoArea(feixe)
 # salvar.armazenarEmTxt(d[0], './a/a.txt')
-# p = ferr.pontos() # pixels da tela
-# salvar.plotNoGnu(d[1][0], p, t, d[1][1])
+# salvar.plotNoGnu(d[1][0], ferr.pontos(), t, d[1][1])
 
-################### ALGUMAS SIMULAÇÕES DE TESTE #######################
-# simulações
-# dados1 = simularParaFeixe(feixe, tamanhoFeixe, n, t)
-# dados2 = simularParaFeixe([-1.57, 15.75], tamanhoFeixe, n, t)
-# dados3 = simularParaFeixe([-1.57, 26.75], tamanhoFeixe, n, t)
-
-# dados das simulações
-# dados1Simulacao = dados1[0]
-# dados2Simulacao = dados2[0]
-# dados3Simulacao = dados3[0]
-# informações para o GNUplot
-# gnu1 = dados1[1]
-# gnu2 = dados2[1]
-# gnu3 = dados3[1]
-# armazena em txt
-# armazenarEmTxt(dados1Simulacao+dados2Simulacao+dados3Simulacao, './a/a.txt')
-# armazena nos txt para o GNU
-# plotNoGnu(gnu1[0]+gnu2[0]+gnu3[0], p, t, gnu1[1]+gnu2[1]+gnu3[1])
-
-print('foi!')
+# print('foi!')
