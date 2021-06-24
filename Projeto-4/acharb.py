@@ -20,11 +20,10 @@ def imagemParaArray(imagem):
                 a = 1
             
             soma = 0
-            if a != 0:
-                for k in range(j):
-                    soma += k
-                soma -= a
-                soma /= 765
+            for k in range(j):
+                soma += k
+            soma -= a
+            soma /= 765
             # m.append(soma)
             matriz.append(soma)
 
