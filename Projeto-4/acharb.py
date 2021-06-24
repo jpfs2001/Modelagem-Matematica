@@ -54,7 +54,7 @@ Q = n
 # 1 - Centro
 # 2 - Reta Central
 # 3 - Área
-metodo = 1
+metodo = 2
 
 retas = ferr.retasConformeDirecao(Q, [tamanhoFeixe, 0.00001, 100000])
 
@@ -101,4 +101,3 @@ f.write(txt)
 f.close()
 
 print(f"\n{'*'*30}\n Anotado em b.txt")
-

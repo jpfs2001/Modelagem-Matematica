@@ -72,11 +72,15 @@ for r in retas:
     # adiciona na lista
     a.append(matrizConvertida)
 
+print("\nOs valores de A para o método selecionado são:")
+print(a)
+
 met.escreverEquacoes(a, b)
 
 # calcula os x
 x = tomografia.densidade(a, b, True)
 # os exibe
+print("\nO valor de x calculado será:")
 print(x)
 
 # converte o resultado para uma matriz quadrada
