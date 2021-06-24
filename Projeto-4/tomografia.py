@@ -10,14 +10,14 @@ class Tomografia:
 
         x0 = []
 
-        for i in range(len(a[0])): 
+        for i in range(len(a[0])):  
             x0.append([0])
         
         # Execução da fórmula apresentada no artigo
         
         x = [] 
 
-        for k in range(1): # Estrutura de repetição para aumentar a precisão dos resultados
+        for k in range(50): # Estrutura de repetição para aumentar a precisão dos resultados
 
             x.clear() # Limpa a lista para que somente o ultimo resultado seja salvo
 
