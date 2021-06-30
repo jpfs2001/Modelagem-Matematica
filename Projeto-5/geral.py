@@ -39,8 +39,9 @@ def autovetor(A, y0, k, margem=0):
     if margem == 0:
         y = [y0]
         for i in range(k):
-            x0 = produtoMatriz(A, y[i])
-            y.append(produtoNumeroReal(x0, 1/normaEuclidiana(x0)))
+            x0 = produtoMatriz(A, y[-1])
+            # y.append(produtoNumeroReal(x0, 1/normaEuclidiana(x0)))
+            y.append(x0)
 
         erro = abs(abs(produtoEscalar(y[-1], y[-2]))-1)
     else:
@@ -63,11 +64,47 @@ def produtoEscalar(A, B):
 def autovalor(A, y):
     return produtoEscalar(y, produtoMatriz(A, y))
 
-A = [[1, 2], [3, 2]]
-y0 = [[1], [0]]
-k = 10
 
-[eigenVet, erro] = autovetor(A, y0, k, 0.0001)
+def somaMatrizes(m1, m2):
+    # cria primeiramente uma matriz de diferença
+    soma = [0]*len(m1) 
+    for i in range(0, len(m1)):
+        # mesma coisa, só que criando uma linha
+        soma[i] = [0]*len(m1)
+        for j in range(0, len(m1)):
+            #calcula a diferença entre cada termo, já que há correspondência
+            soma[i][j] = m1[i][j] + m2[i][j]
+    return soma
+
+### Tarefas ###
+# [ ] Encontrar o A
+# [ ] A partir do A, calcular M = (1-m)A+ mS, onde S(n x n) = [[1/n, ...], ..., [1/n, ...]]
+# [ ] A partir do M, achar o x, dado que x(k) = Mx(k-1)
+
+def calculoM(m, A):
+    S = []
+    for i in range(len(A)):
+        linha = []
+        for j in range(len(A[i])):
+            linha.append(1/len(A))
+        S.append(linha)
+    
+    m1 = produtoNumeroReal(A, 1-m)
+    m2 = produtoNumeroReal(S, m)
+    M = somaMatrizes(m1, m2)
+    return M
+
+    
+A = [[0, 0, 1, .5], [1/3, 0, 0, 0], [1/3, .5, 0, .5], [1/3, .5, 0, 0]]
+y0 = [[.25], [.25], [.25], [.25]]
+k = 40
+m = 0.15
+
+M = calculoM(m, A)
+print(f'{"*"*40}\n O programa só calcula o dominante \n{"*"*40} \n M: ')
+for mi in M:
+    print(mi)
+[eigenVet, erro] = autovetor(M, y0, k)
 eigenVet = eigenVet[-1]
 eigenVal = autovalor(A, eigenVet)
-print(f'{"*"*40}\n O programa só calcula o dominante \n{"*"*40}\n autovetor: {eigenVet} \n erro: {erro} \n autovalor: {eigenVal}')
+print(f'\n autovetor: {eigenVet} \n autovalor: {eigenVal}')
