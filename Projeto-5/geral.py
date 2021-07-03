@@ -18,52 +18,21 @@ def produtoNumeroReal(A, x):
             A[i][j] *= x
     return A
 
-def potenciaMatriz(A, n):
-    prod = A
-    for i in range(1, n):
-        prod = produtoMatriz(A, prod)
-    return prod
-
 def normaEuclidiana(V): 
     n = 0
     for v in V:
         n += v[0]**2
+        
     n = n**0.5
 
     return n
 
-def beta(A, x0, k):
-    return 1/normaEuclidiana(produtoMatriz(potenciaMatriz(A, k), x0))
-
-def autovetor(A, y0, k, margem=0):
-    if margem == 0:
-        y = [y0]
-        for i in range(k):
-            x0 = produtoMatriz(A, y[-1])
-            # y.append(produtoNumeroReal(x0, 1/normaEuclidiana(x0)))
-            y.append(x0)
-            print(abs(abs(produtoEscalar(y[-1], y[-2]))-1))
-
-        erro = abs(abs(produtoEscalar(y[-1], y[-2]))-1)
-    else:
-        erro = 10
-        y = [y0]
-        while erro > margem:
-            x0 = produtoMatriz(A, y[-1])
-            y.append(x0)
-            print(erro)
-            erro = abs(produtoEscalar(y[-1], y[-2])-1)
-
-    return [y, erro]
 
 def produtoEscalar(A, B):
     p = 0
     for i in range(len(A)):
         p += A[i][0]*B[i][0]
     return p
-
-def autovalor(A, y):
-    return produtoEscalar(y, produtoMatriz(A, y))
 
 def somaMatrizes(m1, m2):
     # cria primeiramente uma matriz de soma
@@ -89,17 +58,61 @@ def calculoM(m, A):
     M = somaMatrizes(m1, m2)
     return M
 
+def diferencaMatrizes(m1, m2):
+    # cria primeiramente uma matriz de diferença
+    diferenca = []
+    for i in range(0, len(m1)):
+        # mesma coisa, só que criando uma linha
+        linha = []
+        for j in range(0, len(m1[i])):
+            #calcula a diferença entre cada termo, já que há correspondência
+            linha.append(m1[i][j] - m2[i][j])
+        diferenca.append(linha)
+    return diferenca
+
 def chuteInicial(tamanho):
     chute = []
     for j in range(tamanho):
         linha = [1/tamanho]
         chute.append(linha)
     return chute
+
+def c(M):
+    c = -1
+
+    for coluna in range(len(M[0])):
+        min_ = M[0][coluna]
     
-### Tarefas ###
-# [X] Encontrar o A
-# [X] A partir do A, calcular M = (1-m)A+ mS, onde S(n x n) = [[1/n, ...], ..., [1/n, ...]]
-# [X] A partir do M, achar o x, dado que x(k) = Mx(k-1)
+    for linha in range(len(M)):
+        if min_ < M[linha][coluna]:
+            min_ = M[linha][coluna]
+        
+    mod = 1 - 2*min_
+    if mod < 0:
+        mod = (-1)*mod
+        
+    if c < mod:
+        c = mod
+
+    return c
+
+def calculoErro(xk, xk1):
+    c_ = c(M)    
+    return (c_/(1-c_))*normaEuclidiana(diferencaMatrizes(xk, xk1))
+
+
+def autovetor(A, x0, margem):
+    # definição do vetor X
+    X = [x0]
+    erro = 10**8
+    listaErro = []
+    while erro > margem:
+        xi = produtoMatriz(A, X[-1])
+        X.append(xi)
+        erro = calculoErro(X[-1], X[-2])
+        listaErro.append(erro)
+
+    return [X, listaErro]
 
 A = [
     [0, 0, 1, .5], 
@@ -109,8 +122,8 @@ A = [
 ]
 
 y0 = chuteInicial(len(A))
-k = 40
 m = 0.15
+margem = 0.001
 
 M = calculoM(m, A)
 
@@ -119,8 +132,7 @@ print(f'{"*"*40}\n O programa só calcula o dominante \n{"*"*40} \n M: ')
 for mi in M:
     print(mi)
 
-[eigenVet, erro] = autovetor(M, y0, k)
-eigenVet = eigenVet[-1]
-# eigenVal = autovalor(A, eigenVet)
-# print(f'\n autovetor: {eigenVet} \n autovalor: {eigenVal}')
-print(f'\n autovetor: {eigenVet}')
+[eigenVet, listaErro] = autovetor(M, y0, margem)
+eigenVet = eigenVet[-1] # este é o X mais preciso
+ultimoErro = listaErro[-1] # este é o último erro
+print(f'\n autovetor: {eigenVet} / erro: {ultimoErro}')
