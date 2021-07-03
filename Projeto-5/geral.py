@@ -1,138 +1,156 @@
-def produtoMatriz(A, B):
-    linA, colA = len(A), len(A[0])
-    linB, colB = len(B), len(B[0])
+# a classe abaixo define alguns métodos utilizados para matrizes
+class Matrizes:
+    # produto entre duas matrizes
+    def produtoMatriz(self, A, B):
+        linA, colA = len(A), len(A[0])
+        linB, colB = len(B), len(B[0])
 
-    produto = []
-    for linha in range(linA):
-        produto.append([])
-        for coluna in range(colB):
-            produto[linha].append(0)
-            for k in range(colA):
-                produto[linha][coluna] += A[linha][k] * B[k][coluna]
+        produto = []
+        for linha in range(linA):
+            produto.append([])
+            for coluna in range(colB):
+                produto[linha].append(0)
+                for k in range(colA):
+                    produto[linha][coluna] += A[linha][k] * B[k][coluna]
 
-    return produto
+        return produto
 
-def produtoNumeroReal(A, x):
-    for i in range(len(A)):
-        for j in range(len(A[i])):
-            A[i][j] *= x
-    return A
+    # produto de um número real por uma matriz
+    def produtoNumeroReal(self, A, x):
+        for i in range(len(A)):
+            for j in range(len(A[i])):
+                A[i][j] *= x
+        return A
 
-def normaEuclidiana(V): 
-    n = 0
-    for v in V:
-        n += v[0]**2
+    # soma entre duas matrizes
+    def somaMatrizes(self, m1, m2):
+        # cria primeiramente uma matriz de soma
+        soma = [0]*len(m1) 
+        for i in range(len(m1)):
+            # mesma coisa, só que criando uma linha
+            soma[i] = [0]*len(m1)
+            for j in range(len(m1)):
+                #calcula a soma entre cada termo, já que há correspondência
+                soma[i][j] = m1[i][j] + m2[i][j]
+        return soma
+
+    # diferença entre duas matrizes
+    def diferencaMatrizes(self, m1, m2):
+        # cria primeiramente uma matriz de diferença
+        diferenca = []
+        for i in range(0, len(m1)):
+            # mesma coisa, só que criando uma linha
+            linha = []
+            for j in range(0, len(m1[i])):
+                #calcula a diferença entre cada termo, já que há correspondência
+                linha.append(m1[i][j] - m2[i][j])
+            diferenca.append(linha)
+        return diferenca
+
+    # matriz M utilizada, dado que M = (1-m)A + mS
+    # esta é a matriz perturbada de A
+    def calculoM(self, m, A):
+        S = []
+        for i in range(len(A)):
+            linha = []
+            for j in range(len(A[i])):
+                linha.append(1/len(A))
+            S.append(linha)
         
-    n = n**0.5
+        m1 = self.produtoNumeroReal(A, 1-m) # (1-m)A
+        m2 = self.produtoNumeroReal(S, m) # mS
+        M = self.somaMatrizes(m1, m2)
+        return M
 
-    return n
-
-
-def produtoEscalar(A, B):
-    p = 0
-    for i in range(len(A)):
-        p += A[i][0]*B[i][0]
-    return p
-
-def somaMatrizes(m1, m2):
-    # cria primeiramente uma matriz de soma
-    soma = [0]*len(m1) 
-    for i in range(len(m1)):
-        # mesma coisa, só que criando uma linha
-        soma[i] = [0]*len(m1)
-        for j in range(len(m1)):
-            #calcula a soma entre cada termo, já que há correspondência
-            soma[i][j] = m1[i][j] + m2[i][j]
-    return soma
-
-def calculoM(m, A):
-    S = []
-    for i in range(len(A)):
-        linha = []
-        for j in range(len(A[i])):
-            linha.append(1/len(A))
-        S.append(linha)
+# a classe abaixo contém os principais métodos para vetores
+class Vetores:
+    # cálculo da norma euclidiana de um vetor
+    def normaEuclidiana(self, V): 
+        n = 0
+        for v in V:
+            n += v[0]**2
+        n = n**0.5
+        return n
     
-    m1 = produtoNumeroReal(A, 1-m) # (1-m)A
-    m2 = produtoNumeroReal(S, m) # mS
-    M = somaMatrizes(m1, m2)
-    return M
+    # cálculo do produto escalar A \cdot B
+    def produtoEscalar(self, A, B):
+        p = 0
+        for i in range(len(A)):
+            p += A[i][0]*B[i][0]
+        return p
 
-def diferencaMatrizes(m1, m2):
-    # cria primeiramente uma matriz de diferença
-    diferenca = []
-    for i in range(0, len(m1)):
-        # mesma coisa, só que criando uma linha
-        linha = []
-        for j in range(0, len(m1[i])):
-            #calcula a diferença entre cada termo, já que há correspondência
-            linha.append(m1[i][j] - m2[i][j])
-        diferenca.append(linha)
-    return diferenca
+class Google:
+    def __init__(self, A, m):
+        # instanciamento das classes utilizadas
+        self.Mat = Matrizes()
+        self.Vet = Vetores()
 
-def chuteInicial(tamanho):
-    chute = []
-    for j in range(tamanho):
-        linha = [1/tamanho]
-        chute.append(linha)
-    return chute
+        # definição de A e m no ambiente da classe
+        self.A = A
+        self.m = m
+   
+    # cálculo geral exigido
+    def X(self, margem):
+        # chute inicial
+        self.x0 = self.chuteInicial()
+        # matriz perturbada
+        self.M = self.Mat.calculoM(self.m, self.A)
+        
+        # constante de erro
+        self.c_ = self.c() 
 
-def c(M):
-    c = -1
+        [ autovetor_iteracoes, listaErro ] = self.autovetorDominante(margem)
 
-    for coluna in range(len(M[0])):
-        min_ = M[0][coluna]
+        return [ autovetor_iteracoes, listaErro, self.c_ ]
+
+    # constante de erro que pode ser calculada imediatamente após o cálculo da matriz perturbada
+    def c(self):
+        c = -1
+
+        for coluna in range(len(self.M[0])):
+            min_ = self.M[0][coluna]
+        
+        for linha in range(len(self.M)):
+            if min_ < self.M[linha][coluna]:
+                min_ = self.M[linha][coluna]
+            
+        mod = 1 - 2*min_
+        if mod < 0:
+            mod = (-1)*mod
+            
+        if c < mod:
+            c = mod
+
+        return c
     
-    for linha in range(len(M)):
-        if min_ < M[linha][coluna]:
-            min_ = M[linha][coluna]
+    # cálculo do erro
+    def calculoErro(self, xk, xk1):
+        return (self.c_/(1-self.c_))*self.Vet.normaEuclidiana(self.Mat.diferencaMatrizes(xk, xk1))
+
+    # gera a matriz coluna de elementos 1/n
+    def chuteInicial(self):
+        tamanho = len(self.A)
+        chute = []
+        for j in range(tamanho):
+            linha = [1/tamanho]
+            chute.append(linha)
+        return chute
+
+    # cálculo do autovetor dominante com base na margem de erro oferecida
+    def autovetorDominante(self, margem):
+        # definição do vetor X
+        autovetor_iteracoes = [self.x0]
+        # erro absurdo inicial
+        erro = 10**8
+        # lista onde serão armazenados os erros
+        listaErro = []
+        # calcula até o erro ficar menor que a margem oferecida
+        while erro > margem:
+            # calcula o X e o adiciona na lista de X
+            xi = self.Mat.produtoMatriz(self.M, autovetor_iteracoes[-1])
+            autovetor_iteracoes.append(xi)
+            # calcula o erro e o adiciona na lista de erros
+            erro = self.calculoErro(autovetor_iteracoes[-1], autovetor_iteracoes[-2])
+            listaErro.append(erro)
         
-    mod = 1 - 2*min_
-    if mod < 0:
-        mod = (-1)*mod
-        
-    if c < mod:
-        c = mod
-
-    return c
-
-def calculoErro(xk, xk1):
-    c_ = c(M)    
-    return (c_/(1-c_))*normaEuclidiana(diferencaMatrizes(xk, xk1))
-
-
-def autovetor(A, x0, margem):
-    # definição do vetor X
-    X = [x0]
-    erro = 10**8
-    listaErro = []
-    while erro > margem:
-        xi = produtoMatriz(A, X[-1])
-        X.append(xi)
-        erro = calculoErro(X[-1], X[-2])
-        listaErro.append(erro)
-
-    return [X, listaErro]
-
-A = [
-    [0, 0, 1, .5], 
-    [1/3, 0, 0, 0], 
-    [1/3, .5, 0, .5], 
-    [1/3, .5, 0, 0]
-]
-
-y0 = chuteInicial(len(A))
-m = 0.15
-margem = 0.001
-
-M = calculoM(m, A)
-
-print(f'{"*"*40}\n O programa só calcula o dominante \n{"*"*40} \n M: ')
-
-for mi in M:
-    print(mi)
-
-[eigenVet, listaErro] = autovetor(M, y0, margem)
-eigenVet = eigenVet[-1] # este é o X mais preciso
-ultimoErro = listaErro[-1] # este é o último erro
-print(f'\n autovetor: {eigenVet} / erro: {ultimoErro}')
+        return [autovetor_iteracoes, listaErro]
