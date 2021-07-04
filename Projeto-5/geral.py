@@ -111,7 +111,7 @@ class Google:
             min_ = self.M[0][coluna]
         
         for linha in range(len(self.M)):
-            if min_ < self.M[linha][coluna]:
+            if min_ > self.M[linha][coluna]:
                 min_ = self.M[linha][coluna]
             
         mod = 1 - 2*min_
