@@ -14,10 +14,10 @@ A = insercaoDoUsuario()
 # aquele valorzinho para perturbar a matriz
 m = 0.15
 # margem de erro considerada
-margem = 0.000000000001
+margem = 10**(-5)
 
 # ---- Cálculos ---- #
-# se chama a classe para instanciar A e m
+# chama-se a classe para instanciar A e m
 # foi feito desse jeito para que diversos testes possam ser feitos com várias margens de erro sem que a classe precise ser chamada novamente
 g = Google(A, m)
 
