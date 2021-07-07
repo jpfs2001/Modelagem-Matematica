@@ -23,7 +23,7 @@ def insercaoDoUsuario():
             n = int(n)
             break
         else:
-            print("Você não digitou um inteiro positivo. Tenta novamente.")
+            print("Você não digitou um inteiro positivo. Tente novamente.")
             continue    
 
     A = gerarAVazio(n)

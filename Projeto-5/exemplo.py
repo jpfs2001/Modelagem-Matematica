@@ -3,6 +3,7 @@ from grafo import desenhaA
 from matrizA import insercaoDoUsuario
 
 # matriz do exemplo
+# exemplo 1
 # A = [
 #     [0, 0, 1, .5], 
 #     [1/3, 0, 0, 0], 
