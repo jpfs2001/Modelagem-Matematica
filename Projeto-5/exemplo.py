@@ -2,6 +2,35 @@ from geral import Google
 from grafo import desenhaA
 from matrizA import insercaoDoUsuario
 
+# menu
+
+print("Vamos definir a matriz de ligação A de acordo com o problema = que se deseja explorar:")
+print("1 - Exemplo do enunciado, com 4 páginas.")
+print("2 - Exemplo do Exercício 3, com 8 páginas.")
+print("3 - Criar novo exemplo.")
+x = int(input("Digite a opção correspondente: "))
+
+if x == 1:
+    A = [
+       [0, 0, 1, .5], 
+       [1/3, 0, 0, 0], 
+       [1/3, .5, 0, .5], 
+       [1/3, .5, 0, 0]
+       ]
+elif x == 2:
+    A = [
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5],
+        [0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.5, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.5],
+        [0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.5, 0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.5, 0.5, 1.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.5, 0.0, 0.0, 1.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0]
+        ]
+elif x == 3:
+    A = insercaoDoUsuario()
+
 # matriz do exemplo
 # exemplo 1
 # A = [
@@ -10,7 +39,6 @@ from matrizA import insercaoDoUsuario
 #     [1/3, .5, 0, .5], 
 #     [1/3, .5, 0, 0]
 # ]
-A = insercaoDoUsuario()
 
 # aquele valorzinho para perturbar a matriz
 m = 0.15
