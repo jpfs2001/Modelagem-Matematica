@@ -4,7 +4,7 @@ from matrizA import insercaoDoUsuario
 
 # menu
 
-print("Vamos definir a matriz de ligação A de acordo com o problema = que se deseja explorar:")
+print("Vamos definir a matriz de ligação A de acordo com o problema que se deseja explorar:")
 print("1 - Exemplo do enunciado, com 4 páginas.")
 print("2 - Exemplo do Exercício 3, com 8 páginas.")
 print("3 - Criar novo exemplo.")
@@ -58,6 +58,14 @@ g = Google(A, m)
 # ---- Exibição ---- #
 # autovetores
 print(f"Para a matriz informada, o autovetor dominante calculado é: \n {autovetores_lista[-1]} \n\nCom erro estimado em: \n {erros_lista[-1]} \n\nE a constante c para a matriz informada é: \n {c} ")
+
+# rankeamento das páginas
+print("\n* Rankeamento das páginas * \n")
+y = []
+for elemento in autovetores_lista[-1]:
+    y.append(elemento[0])
+for k in range(1, len(y)+1):
+    print(f" - Posição {k}: Página {y.index(sorted(y)[-k])+1}")
 
 # desenha matriz A
 desenhaA(A)
