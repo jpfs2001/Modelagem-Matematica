@@ -15,8 +15,13 @@ def capturarImagemOnline(link):
     page = requests.get(link)
     f_ext = os.path.splitext(link)[-1]
     f_name = f'./figs/temp/tempImg{f_ext}'
-    with open(f_name, 'wb') as f:
-        f.write(page.content)
+    try: 
+        with open(f_name, 'wb') as f:
+            f.write(page.content)
+    except:
+        os.makedirs('./figs/temp')
+        with open(f_name, 'wb') as f:
+            f.write(page.content)
 
 # redimensiona imagem
 def redimensionarImagem(link):
@@ -27,7 +32,11 @@ def redimensionarImagem(link):
     t = 101,101
     im = im.resize(t, Image.NEAREST)
     # salva
-    im.save('./figs/temp/redimensionado.jpg', 'JPEG')
+    try:
+        im.save('./figs/temp/redimensionado.jpg', 'JPEG')
+    except:
+        os.makedirs('./figs/temp')
+        im.save('./figs/temp/redimensionado.jpg', 'JPEG')
     # apaga a imagem temporária
     os.remove('./figs/temp/tempImg.jpg')
     print('imagem redimensionada!\n')

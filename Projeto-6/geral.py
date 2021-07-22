@@ -185,7 +185,11 @@ class Desenho:
                 # seta a cor do pixel em RGB
                 pixel_set[row, col] = (r, g, b)
 
-        pillow_obj.save(*FILENAME)
+        try: 
+            pillow_obj.save(*FILENAME)
+        except:
+            os.mkdir('./resultado')
+            pillow_obj.save(*FILENAME)
     # salva imagem preta e branca
     def exibir(self, matriz, nome, tamanho = [101, 101]):
         [WIDTH, HEIGHT] = tamanho
